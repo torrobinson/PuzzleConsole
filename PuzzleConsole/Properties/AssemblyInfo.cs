@@ -8,9 +8,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("PuzzleConsole")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PCL Constructors Inc.")]
-[assembly: AssemblyProduct("PuzzleConsole")]
-[assembly: AssemblyCopyright("Copyright © PCL Constructors Inc. 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
