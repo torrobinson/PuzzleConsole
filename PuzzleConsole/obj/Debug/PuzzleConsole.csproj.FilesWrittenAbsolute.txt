@@ -1,0 +1,6 @@
+/Users/torrobinson/Documents/Development/Dot Net/PuzzleConsole/PuzzleConsole/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/torrobinson/Documents/Development/Dot Net/PuzzleConsole/PuzzleConsole/obj/Debug/PuzzleConsole.exe
+/Users/torrobinson/Documents/Development/Dot Net/PuzzleConsole/PuzzleConsole/bin/Debug/PuzzleConsole.exe.config
+/Users/torrobinson/Documents/Development/Dot Net/PuzzleConsole/PuzzleConsole/bin/Debug/PuzzleConsole.exe.mdb
+/Users/torrobinson/Documents/Development/Dot Net/PuzzleConsole/PuzzleConsole/bin/Debug/PuzzleConsole.exe
+/Users/torrobinson/Documents/Development/Dot Net/PuzzleConsole/PuzzleConsole/obj/Debug/PuzzleConsole.exe.mdb
