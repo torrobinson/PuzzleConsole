@@ -8,7 +8,7 @@ using PuzzleConsole.Game;
 
 namespace PuzzleConsole.WorldTypes
 {
-    public abstract class Movable : WorldObject
+    public abstract class Movable : Actor
     {
         //Indicates that this item can move
         public bool Static = false;
@@ -20,14 +20,17 @@ namespace PuzzleConsole.WorldTypes
 
         //Helper for checking if this object can move in any given directions
 		public bool canMove(PuzzleConsole.Common.Direction inDirection){
-			WorldObject objectPossiblyInWay = GetObjectInDirection (inDirection);
-            if (objectPossiblyInWay == null) //if object doesnt exist
+			Actor objectPossiblyInWay = GetObjectInDirection (inDirection);
+
+            //if object doesnt exist
+            if (objectPossiblyInWay == null)
             { 
                 return true; //allow moving to an empty space
             }
 
+            //or it can be pushed out of the way
             if (objectPossiblyInWay != null && objectPossiblyInWay.GetType().IsSubclassOf(typeof(Pushable)) && ((Pushable)objectPossiblyInWay).canMove(inDirection))
-            { //or it can be pushed out of the way
+            { 
                 ((Pushable)objectPossiblyInWay).Move(inDirection); //kick-off the push
                 return true; //allow moving to the now-empty spot
             }

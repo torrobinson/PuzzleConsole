@@ -11,6 +11,7 @@ namespace PuzzleConsole.WorldTypes
     {
         public Player() {
             base.characterRepresentation = "+";
+            base.color = ConsoleColor.Red;
         }
     }
 }

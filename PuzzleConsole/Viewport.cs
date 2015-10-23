@@ -18,24 +18,32 @@ namespace PuzzleConsole
             refreshSize();
         }
 
-        public void RenderWorld(World world){
+        public void RenderWorld(List<ActorLayer> layers){
+            int x, y;
             Console.Clear();
-            Console.CursorVisible = false;
+            //For each visible layer from back to front
+            foreach(ActorLayer layer in layers.OrderBy(l => l.ZIndex).Where(l => l.Visible)){
+                x = 0;
+                y = 0;
+                //for each row of actors on that layer
+                foreach(List<Actor> row in layer.Actors){
 
-            //Render all world items
-            foreach(List<WorldObject> row in world.Objects){
-                foreach (WorldObject worldObject in row) {
-                    if(worldObject == null 
-                        || (
-                            worldObject != null && !worldObject.Visible
-                        )){
-                        Console.Write(" ");     //display as nothing if there's nothing here or the object isn't visible
+                    //for each actor in that row
+                    foreach(Actor actor in row){
+                        if (actor != null)
+                        {
+                            Console.ForegroundColor = actor.color;
+                            Console.SetCursorPosition(x, y);
+                            Console.Write(actor.ToString());
+                        }
+                        else {
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                        x++;
                     }
-                    else{
-                        Console.Write(worldObject.ToString());
-                    }
+                    x = 0;
+                    y++;
                 }
-                Console.WriteLine();
             }
         }
 

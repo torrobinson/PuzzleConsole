@@ -8,30 +8,33 @@ using System.IO;
 
 namespace PuzzleConsole.WorldTypes
 {
-    public class World
+    public class ActorLayer
     {
-        public List<List<WorldObject>> Objects = new List<List<WorldObject>>();
-        public int width = 0;
-        public int height = 0;
+        public List<List<Actor>> Actors = new List<List<Actor>>();
+        public int Width = 0;
+        public int Height = 0;
+        public int ZIndex = 0; // -1 = below base, 0 = base, 1 = above base
+        public bool Visible = true;
 
-        public World(int width, int height) {
-            this.width = width;
-            this.height = height;
+        public ActorLayer(int width, int height, int zIndex) {
+            this.Width = width;
+            this.Height = height;
+            this.ZIndex = zIndex;
         }
 
         private void InitializeAsEmpty(int width, int height) {
-            Objects = new List<List<WorldObject>>();
+            Actors = new List<List<Actor>>();
             for (var h = 0; h < height; h++)
             {
-                List<WorldObject> row = new List<WorldObject>();
+                List<Actor> row = new List<Actor>();
                 for (var w = 0; w < width; w++)
                 {
                     row.Add(null);
                 }
-                Objects.Add(row);
+                Actors.Add(row);
             }
-            this.width = width;
-            this.height = height;
+            this.Width = width;
+            this.Height = height;
         }
         public void InitializeFromFile(string filename) {
             //Perform load
@@ -39,11 +42,7 @@ namespace PuzzleConsole.WorldTypes
 
             //Figure out height and width
             int height = maplines.Length;
-            int width = 0;
-            foreach (string line in maplines) { //find the longest row
-                if (line.Count() > width)
-                    width = line.Count();
-            }
+            int width = maplines.Select(l => l.Length).Max();
 
             //Empty the world at the maximum size needed
             InitializeAsEmpty(width, height);
@@ -61,15 +60,17 @@ namespace PuzzleConsole.WorldTypes
                         if (typeToInsert != null)
                         {
                             //If we found one, then inject a new one into the world
-                            WorldObject objToInsert = (WorldObject)Activator.CreateInstance(typeToInsert);
+                            Actor objToInsert = (Actor)Activator.CreateInstance(typeToInsert);
                             AddObject(objToInsert, x, y);
                         }
                         else {
-                            //Type not recognized
+                            //Type not recognized, so just add a wall/static item with the same character
+                            Wall newCustomWall = new Wall();
+                            newCustomWall.color = ConsoleColor.White; //default if it's an unknown tile
+                            newCustomWall.characterRepresentation = character.ToString();
+                            AddObject(newCustomWall, x, y);
                         }
-                        
                     }
-
                     x++;
                 }
                 x = 0;
@@ -77,51 +78,51 @@ namespace PuzzleConsole.WorldTypes
             }
         }
 
-        public void AddObject(WorldObject obj, int x, int y) {
+        public void AddObject(Actor obj, int x, int y) {
             if (IsSpaceFree(x,y))
             {
-                Point here = new Point(x,y);
+                Point specifiedPoint = new Point(x,y);
 
 				//Inject into world
-				SetObjectAtPoint(obj, here);
+                SetObjectAtPoint(obj, specifiedPoint);
 
 				//Set the object's world to this world
 				obj.World = this;
-                obj.Location = here;
+                obj.Location = specifiedPoint;
             }
         }
 
         public bool IsSpaceFree(int x, int y) {
 
             if (x < 0 || y < 0) return false;
-            if (x > Objects[0].Count() || y > Objects.Count()) return false;
+            if (x > Actors[0].Count() || y > Actors.Count()) return false;
 
-            return Objects == null || Objects[y][x] == null;
+            return Actors == null || Actors[y][x] == null;
         }
 
 
 
-		public WorldObject GetObjectAtPoint(int x, int y){
-			return Objects [y][x];
+		public Actor GetObjectAtPoint(int x, int y){
+			return Actors [y][x];
 		}
-		public WorldObject GetObjectAtPoint(Point point){
+		public Actor GetObjectAtPoint(Point point){
 			return GetObjectAtPoint(point.X, point.Y);
 		}
 
-		public void SetObjectAtPoint(WorldObject obj, int x, int y){
-			Objects[y][x] = obj;
+		public void SetObjectAtPoint(Actor obj, int x, int y){
+			Actors[y][x] = obj;
 		}
-		public void SetObjectAtPoint(WorldObject obj, Point point){
+		public void SetObjectAtPoint(Actor obj, Point point){
 			SetObjectAtPoint(obj,point.X, point.Y);
 		}
 
-        public WorldObject GetObjectAt(int x, int y) {
-            return Objects[y][x];
+        public Actor GetObjectAt(int x, int y) {
+            return Actors[y][x];
         }
 
-        public WorldObject FindFirstObjectInWorldOfType(Type theType) {
-            foreach (List<WorldObject> row in Objects) {
-                foreach(WorldObject obj in row.Where(o=>o!=null)){
+        public Actor FindFirstObjectInWorldOfType(Type theType) {
+            foreach (List<Actor> row in Actors) {
+                foreach(Actor obj in row.Where(o=>o!=null)){
                     if (theType == obj.GetType() || obj.GetType().IsSubclassOf(theType))
                         return obj;
                 }

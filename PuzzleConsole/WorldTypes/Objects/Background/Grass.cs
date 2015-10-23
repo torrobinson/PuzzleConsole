@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.WorldTypes
 {
-    public abstract class Clippable : WorldObject
+    public class Grass:Actor
     {
-
-        public Clippable()
+        public Grass()
         {
-            //handle logic for saving location and re-ijnectingo into world after having been moved through by a Movable type
+            base.characterRepresentation = "░";
+            base.color = ConsoleColor.DarkGreen;
         }
-
     }
 }

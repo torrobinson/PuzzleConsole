@@ -47,19 +47,26 @@
     <Compile Include="Viewport.cs" />
     <Compile Include="WorldTypes\Abstract\Movable.cs" />
     <Compile Include="WorldTypes\Abstract\Pushable.cs" />
+    <Compile Include="WorldTypes\Objects\Background\Grass.cs" />
     <Compile Include="WorldTypes\Objects\Movable\Pebble.cs" />
     <Compile Include="WorldTypes\Objects\Movable\Stone.cs" />
     <Compile Include="WorldTypes\Objects\Movable\Player.cs" />
     <Compile Include="WorldTypes\Objects\Static\Wall.cs" />
-    <Compile Include="WorldTypes\World.cs" />
-    <Compile Include="WorldTypes\Abstract\WorldObject.cs" />
+    <Compile Include="WorldTypes\ActorLayer.cs" />
+    <Compile Include="WorldTypes\Abstract\Actor.cs" />
     <Compile Include="Common.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="map.txt">
+    <Content Include="foreground.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="background.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="walls_and_items.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

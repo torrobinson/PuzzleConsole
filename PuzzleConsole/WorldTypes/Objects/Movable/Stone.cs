@@ -12,6 +12,7 @@ namespace PuzzleConsole.WorldTypes
         public Stone()
         {
             base.characterRepresentation = "@";
+            base.color = ConsoleColor.Gray;
         }
     }
 }

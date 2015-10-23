@@ -10,4 +10,6 @@ C:\Users\Tor\Desktop\PuzzleConsole\PuzzleConsole\bin\Debug\PuzzleConsole.pdb
 C:\Users\Tor\Desktop\PuzzleConsole\PuzzleConsole\obj\Debug\PuzzleConsole.csprojResolveAssemblyReference.cache
 C:\Users\Tor\Desktop\PuzzleConsole\PuzzleConsole\obj\Debug\PuzzleConsole.exe
 C:\Users\Tor\Desktop\PuzzleConsole\PuzzleConsole\obj\Debug\PuzzleConsole.pdb
-C:\Users\Tor\Desktop\PuzzleConsole\PuzzleConsole\bin\Debug\map.txt
+C:\Users\Tor\Desktop\PuzzleConsole\PuzzleConsole\bin\Debug\background.txt
+C:\Users\Tor\Desktop\PuzzleConsole\PuzzleConsole\bin\Debug\walls_and_items.txt
+C:\Users\Tor\Desktop\PuzzleConsole\PuzzleConsole\bin\Debug\foreground.txt

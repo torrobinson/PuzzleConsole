@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.WorldTypes
 {
-    public class Wall : WorldObject
+    public class Wall : Actor
     {
         public Wall() {
-            base.characterRepresentation = "#";
+            base.characterRepresentation = "█";
+            base.color = ConsoleColor.DarkGray;
         }
     }
 }
