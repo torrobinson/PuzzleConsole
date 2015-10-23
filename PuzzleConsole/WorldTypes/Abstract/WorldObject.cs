@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace PuzzleConsole.WorldTypes
 {
@@ -18,6 +19,7 @@ namespace PuzzleConsole.WorldTypes
 
         //Attributes
         public bool Static = true;
+        public bool Clippable= false;
         public bool Visible = true;
         //public int Zindex = 0; //not implemented yet
 
@@ -59,5 +61,18 @@ namespace PuzzleConsole.WorldTypes
         public override string ToString() {
             return characterRepresentation;
         }
+    }
+
+    public static class WorldObjectHelpers {
+   
+        public static Type GetSubclassForStringRepresentation(string representation) {
+            foreach(Type typ in Assembly.GetAssembly(typeof(WorldObject)).GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(WorldObject)))){
+                if (((WorldObject)Activator.CreateInstance(typ)).characterRepresentation == representation) {
+                    return typ;
+                }
+            }
+            return null;
+        }
+
     }
 }

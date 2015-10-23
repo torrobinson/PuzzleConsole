@@ -55,21 +55,19 @@ namespace PuzzleConsole.WorldTypes
             {
                 foreach (char character in line)
                 {
-                    string cell = character.ToString();
-                    
-                    //Determine the object to add to the map
-                    switch (cell) {
-                        case "#":
-                            AddObject(new Wall(), x, y);
-                            break;
-
-                        case "+":
-                            AddObject(new Player(), x, y);
-                            break;
-
-                        case "@":
-                            AddObject(new Stone(), x, y);
-                            break;
+                    if(character != ' '){
+                        //Find the type for this character
+                        Type typeToInsert = WorldObjectHelpers.GetSubclassForStringRepresentation(character.ToString());
+                        if (typeToInsert != null)
+                        {
+                            //If we found one, then inject a new one into the world
+                            WorldObject objToInsert = (WorldObject)Activator.CreateInstance(typeToInsert);
+                            AddObject(objToInsert, x, y);
+                        }
+                        else {
+                            //Type not recognized
+                        }
+                        
                     }
 
                     x++;

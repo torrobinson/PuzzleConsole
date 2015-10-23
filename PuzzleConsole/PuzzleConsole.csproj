@@ -47,6 +47,7 @@
     <Compile Include="Viewport.cs" />
     <Compile Include="WorldTypes\Abstract\Movable.cs" />
     <Compile Include="WorldTypes\Abstract\Pushable.cs" />
+    <Compile Include="WorldTypes\Objects\Movable\Pebble.cs" />
     <Compile Include="WorldTypes\Objects\Movable\Stone.cs" />
     <Compile Include="WorldTypes\Objects\Movable\Player.cs" />
     <Compile Include="WorldTypes\Objects\Static\Wall.cs" />
