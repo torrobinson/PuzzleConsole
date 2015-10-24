@@ -15,12 +15,15 @@ namespace PuzzleConsole.ActorTypes
         public int Width = 0;
         public int Height = 0;
         public int ZIndex = 0; // -1 = below base, 0 = base, 1 = above base
+        public bool AlwaysCentered; //if true, this layer will always appear centered on screen
         public bool Visible = true;
         public string Name = "Layer";
+        public GameInstance GameInstance;
 
-        public ActorLayer(string name, int zIndex) {
+        public ActorLayer(string name, int zIndex, GameInstance game) {
             this.ZIndex = zIndex;
             this.Name = name;
+            this.GameInstance = game;
         }
 
         private void InitializeAsEmpty(int width, int height) {
@@ -135,9 +138,10 @@ namespace PuzzleConsole.ActorTypes
         }
 
         public ActorLayer Clone() {
-            ActorLayer copyLayer = new ActorLayer(this.Name, this.ZIndex);
+            ActorLayer copyLayer = new ActorLayer(this.Name, this.ZIndex, this.GameInstance);
             copyLayer.Height = this.Height;
             copyLayer.Width = this.Width;
+            copyLayer.AlwaysCentered = this.AlwaysCentered;
 
             foreach (List<Actor> row in this.Actors)
             {

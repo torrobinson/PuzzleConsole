@@ -77,10 +77,7 @@ namespace PuzzleConsole
         public static ActorLayer CutLayerToSize(ActorLayer layer, Point center, int width, int height)
         {
            //Copy the original to a new layer
-           ActorLayer original = new ActorLayer(layer.Name, layer.ZIndex);
-           original.Width = layer.Width;
-           original.Height = layer.Height;
-           original.Actors = layer.Actors;
+           ActorLayer original = layer.Clone();
 
            layer.Width = width;
            layer.Height = height;

@@ -44,6 +44,7 @@
     <Compile Include="Actors\Objects\Static\Metal.cs" />
     <Compile Include="Actors\Objects\Static\OutOfBounds.cs" />
     <Compile Include="Actors\Objects\Static\Empty.cs" />
+    <Compile Include="Game\GameInstance.cs" />
     <Compile Include="Game\Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +64,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Maps\paused.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maps\foreground.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

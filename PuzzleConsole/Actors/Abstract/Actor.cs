@@ -11,11 +11,12 @@ using System.Runtime.Serialization;
 
 namespace PuzzleConsole.ActorTypes
 {
-    public abstract class Actor
+    public abstract class Actor : IDisposable
     {
         //Positional
         public ActorLayer Layer;
         public Point Location;
+        public Actor Represents; //if this actor is ever out of world but we still want it to represent a real actor in memory
 
         //Attributes
         public bool Static = true;
@@ -33,7 +34,18 @@ namespace PuzzleConsole.ActorTypes
         public ConsoleColor backColor = ConsoleColor.Black;
 
         public Actor() {
-           
+        }
+
+        public void SubscribeToTicks() {
+            GameInstance.TickHandler += (sender, args) => GameTick(args);
+        }
+
+        public void UnsubscribeFromTicks() {
+            GameInstance.TickHandler -= (sender, args) => GameTick(args);
+        }
+
+        public void GameTick(EventArgs args){
+            
         }
 
 
@@ -51,15 +63,34 @@ namespace PuzzleConsole.ActorTypes
 		}
 
         //Return whether there is anything above this actor, given other layers to check
-        public bool IsAnythingAbove(List<ActorLayer> layers){
-            //Go through any layers with a higher zindex
-            foreach(ActorLayer layer in layers.Where(l => l.ZIndex > this.Layer.ZIndex)){
-                //And check to see if another object occupies this same location
-                if(!layer.IsSpaceFree(this.Location.X, this.Location.Y)){
-                    return true;
+        public Actor GetFirstObjectBelow(){
+            //Find the first layer below
+
+            if (Layer == null) {
+                return null;
+            }
+
+            IEnumerable<ActorLayer> possibleBackgroundLayers = Layer.GameInstance.Layers.Where(l => l.ZIndex < this.Layer.ZIndex);
+            ActorLayer layerBelow = null;
+            
+            if(possibleBackgroundLayers.Any()){
+                layerBelow = possibleBackgroundLayers.First();
+            }
+
+            if(layerBelow == null){
+                //If no layer was below
+                return null;
+            }
+            else{
+                Actor actorBelow = layerBelow.GetObjectAtPoint(this.Location);
+                if(actorBelow == null){
+                    //If nothing was below
+                    return null;
+                }
+                else{
+                    return actorBelow;
                 }
             }
-                return false;
         }
 
         //Returns the object (if any) 1 tile away from this object int he given direction
@@ -80,6 +111,10 @@ namespace PuzzleConsole.ActorTypes
         //Override the ToString for debugging and console rendering
         public override string ToString() {
             return CharacterRepresentation;
+        }
+
+        public void Dispose() {
+            UnsubscribeFromTicks();
         }
     }
 

@@ -34,7 +34,13 @@ namespace PuzzleConsole
             List<ActorLayer> cutLayers = new List<ActorLayer>();
             foreach (ActorLayer layer in layersToDraw)
             {
-                ActorLayer cutLayer = Common.CutLayerToSize(layer, CameraLocation, Width, Height);
+                ActorLayer cutLayer = layer;
+
+                //If the layer isnt supposed to always be center screen (like a UI element), then cut it
+                if (!layer.AlwaysCentered) {
+                    cutLayer = Common.CutLayerToSize(cutLayer, CameraLocation, Width, Height);
+                }
+
                 cutLayers.Add(cutLayer);
             }
 
@@ -101,6 +107,7 @@ namespace PuzzleConsole
                     if (previousFrame[y][x].ToString() != currentFrameActor.ToString())
                     {
                         delta[y][x] = currentFrameActor;
+                        delta[y][x].Represents = currentFrameActor;
                     }
                     x++;
                 }
