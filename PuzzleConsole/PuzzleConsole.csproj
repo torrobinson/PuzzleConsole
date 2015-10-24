@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\Objects\Static\Metal.cs" />
     <Compile Include="Actors\Objects\Static\OutOfBounds.cs" />
     <Compile Include="Actors\Objects\Static\Empty.cs" />
     <Compile Include="Game\Point.cs" />

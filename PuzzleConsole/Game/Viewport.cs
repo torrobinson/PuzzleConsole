@@ -64,12 +64,13 @@ namespace PuzzleConsole
             layersToDraw = null;
         }
 
-        protected static void WriteStringToConsoleAtPosition(string str, int x, int y, ConsoleColor color = ConsoleColor.White)
+        protected static void WriteStringToConsoleAtPosition(string str, int x, int y, ConsoleColor foreColor = ConsoleColor.White, ConsoleColor backColor = ConsoleColor.Black)
         {
             try
             {
                 Console.SetCursorPosition(x, y);
-                Console.ForegroundColor = color;
+                Console.BackgroundColor = backColor;
+                Console.ForegroundColor = foreColor;
                 Console.Write(str);
                 Console.SetCursorPosition(0, 0); //otherwise characters surrounding the crrent position will be overwritten with the key the user pressed!
             }
@@ -121,7 +122,7 @@ namespace PuzzleConsole
                     //Render if the change exists
                     if (delta != null)
                     {
-                        WriteStringToConsoleAtPosition(delta.ToString(), x, y, delta.color);
+                        WriteStringToConsoleAtPosition(delta.ToString(), x, y, delta.foreColor, delta.backColor);
                     }
                     x++;
                 }

@@ -11,7 +11,7 @@ namespace PuzzleConsole.ActorTypes
     {
         public Stone()
         {
-            base.color = ConsoleColor.Magenta;
+            base.foreColor = ConsoleColor.Magenta;
         }
 
         public override string CharacterRepresentation

@@ -11,7 +11,7 @@ namespace PuzzleConsole.ActorTypes
     {
         public Pebble()
         {
-            base.color = ConsoleColor.Yellow;
+            base.foreColor = ConsoleColor.Yellow;
         }
 
         public override string CharacterRepresentation

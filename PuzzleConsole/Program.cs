@@ -33,14 +33,15 @@ namespace PuzzleConsole
             //Fetch the first player in the map and bind controls to them (the player was automatically added from being read in from the map)
             Player thePlayer = (Player)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Player));
 
-            //Set the viewports camera location to the player
-            view.CameraLocation = thePlayer.Location;
-
             //Loop and wait for input
             while (true) {
 
+                //Set the viewports camera location to the player
+                view.CameraLocation = thePlayer.Location;
+
                 //Render the frame using the layers we've defined
                 view.RenderFrame(layersToRender);
+
                 //Pause and capture movements
                 switch (Console.ReadKey(false).Key)
                 {
@@ -58,8 +59,7 @@ namespace PuzzleConsole
                         break;
                 }
 
-                //After the movement, update the camera location before the next frame render
-                view.CameraLocation = thePlayer.Location;
+                view.RefreshSize();
 
                 //If the user tytped any printable characters, this will keep them from writing over the world
                 // by jumping the cursor back

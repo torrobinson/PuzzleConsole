@@ -24,7 +24,7 @@ namespace PuzzleConsole.ActorTypes
         private string dlr = "╦";
 
         public Wall() {
-            base.color = ConsoleColor.DarkGray;
+            base.foreColor = ConsoleColor.DarkGray;
         }
 
         public override string CharacterRepresentation

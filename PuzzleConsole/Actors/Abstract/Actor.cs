@@ -29,7 +29,8 @@ namespace PuzzleConsole.ActorTypes
             set {}
         }
 
-        public ConsoleColor color = ConsoleColor.White;
+        public ConsoleColor foreColor = ConsoleColor.White;
+        public ConsoleColor backColor = ConsoleColor.Black;
 
         public Actor() {
            

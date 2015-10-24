@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.ActorTypes
 {
-    public class Player: Movable
+    public class Metal : Actor
     {
-        public Player() {
-            base.foreColor = ConsoleColor.Red;
-            base.backColor = ConsoleColor.Yellow;
+        public Metal()
+        {
+            base.foreColor = ConsoleColor.Black;
+            base.backColor = ConsoleColor.DarkGray;
         }
 
         public override string CharacterRepresentation
         {
             get
             {
-               return "+";
+                return "X";
             }
         }
     }

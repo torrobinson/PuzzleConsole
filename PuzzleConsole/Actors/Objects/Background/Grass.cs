@@ -11,7 +11,8 @@ namespace PuzzleConsole.ActorTypes
     {
         public Grass()
         {
-            base.color = ConsoleColor.DarkGreen;
+            base.backColor = ConsoleColor.DarkGreen;
+            base.foreColor = ConsoleColor.Green;
         }
 
         public override string CharacterRepresentation

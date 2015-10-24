@@ -66,7 +66,7 @@ namespace PuzzleConsole.ActorTypes
                     else {
                         //Type not recognized, so just add a wall/static item with the same character
                         Wall newCustomWall = new Wall();
-                        newCustomWall.color = ConsoleColor.White; //default if it's an unknown tile
+                        newCustomWall.foreColor = ConsoleColor.White; //default if it's an unknown tile
                         newCustomWall.CharacterRepresentation = character.ToString();
                         AddObject(newCustomWall, x, y);
                     }
