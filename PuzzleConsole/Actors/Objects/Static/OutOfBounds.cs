@@ -11,7 +11,14 @@ namespace PuzzleConsole.ActorTypes
     {
         public OutOfBounds()
         {
-            base.characterRepresentation = "?";
+        }
+
+        public override string CharacterRepresentation
+        {
+            get
+            {
+                return "?";
+            }
         }
     }
 }

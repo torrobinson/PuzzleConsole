@@ -11,8 +11,15 @@ namespace PuzzleConsole.ActorTypes
     {
         public Pebble()
         {
-            base.characterRepresentation = ".";
             base.color = ConsoleColor.Yellow;
+        }
+
+        public override string CharacterRepresentation
+        {
+            get
+            {
+                return ".";
+            }
         }
     }
 }

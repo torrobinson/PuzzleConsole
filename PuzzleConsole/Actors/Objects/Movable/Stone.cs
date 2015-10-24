@@ -11,8 +11,15 @@ namespace PuzzleConsole.ActorTypes
     {
         public Stone()
         {
-            base.characterRepresentation = "@";
             base.color = ConsoleColor.Magenta;
+        }
+
+        public override string CharacterRepresentation
+        {
+            get
+            {
+                return "@";
+            }
         }
     }
 }

@@ -23,7 +23,12 @@ namespace PuzzleConsole.ActorTypes
         public bool Clippable = false; //can be walked through
         //public int Zindex = 0; //not implemented yet
 
-        public string characterRepresentation = " ";
+        public virtual string CharacterRepresentation
+        {
+            get {return " ";}
+            set {}
+        }
+
         public ConsoleColor color = ConsoleColor.White;
 
         public Actor() {
@@ -73,7 +78,7 @@ namespace PuzzleConsole.ActorTypes
 
         //Override the ToString for debugging and console rendering
         public override string ToString() {
-            return characterRepresentation;
+            return CharacterRepresentation;
         }
     }
 
@@ -81,7 +86,7 @@ namespace PuzzleConsole.ActorTypes
    
         public static Type GetSubclassForStringRepresentation(string representation) {
             foreach(Type typ in Assembly.GetAssembly(typeof(Actor)).GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(Actor)))){
-                if (((Actor)Activator.CreateInstance(typ)).characterRepresentation == representation) {
+                if (((Actor)Activator.CreateInstance(typ)).CharacterRepresentation == representation) {
                     return typ;
                 }
             }

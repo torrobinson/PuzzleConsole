@@ -14,14 +14,15 @@ namespace PuzzleConsole
             //Prepare the 3 layers of objects/actors we want in play
             ActorLayer foreground = new ActorLayer("Foreground stuff",                            1);
             foreground.InitializeFromFile("Maps/foreground.txt");
-            foreground.Visible = false;
+            
 
             ActorLayer wallsAndItems = new ActorLayer("Main layer with players, walls, and items",0);
             wallsAndItems.InitializeFromFile("Maps/walls_and_items.txt");
-            wallsAndItems.Visible = false;
+          //  wallsAndItems.Visible = false;
 
             ActorLayer background = new ActorLayer("Background stuff",                           -1);
             background.InitializeFromFile("Maps/background.txt");
+           // background.Visible = false;
 
             List<ActorLayer> layersToRender = new List<ActorLayer>(){foreground, wallsAndItems, background };
 

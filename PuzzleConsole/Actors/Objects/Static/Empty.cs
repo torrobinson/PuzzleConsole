@@ -11,8 +11,15 @@ namespace PuzzleConsole.ActorTypes
     {
         public Empty()
         {
-            base.characterRepresentation = " ";
             base.Clippable = true;
+        }
+
+        public override string CharacterRepresentation
+        {
+            get
+            {
+                return " ";
+            }
         }
     }
 }

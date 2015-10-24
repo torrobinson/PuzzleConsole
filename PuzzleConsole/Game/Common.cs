@@ -76,10 +76,6 @@ namespace PuzzleConsole
 
         public static ActorLayer CutLayerToSize(ActorLayer layer, Point center, int width, int height)
         {
-            //If the size is the same as the viewport, don't do anything
-            if(layer.Height <= height && layer.Width <= width){
-                return layer;
-            }
            //Copy the original to a new layer
            ActorLayer original = new ActorLayer(layer.Name, layer.ZIndex);
            original.Width = layer.Width;

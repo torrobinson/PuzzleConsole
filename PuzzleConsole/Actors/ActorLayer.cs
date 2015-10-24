@@ -57,6 +57,7 @@ namespace PuzzleConsole.ActorTypes
                 {
                     if(character != ' '){
                         //Find the type for this character
+
                         Type typeToInsert = WorldObjectHelpers.GetSubclassForStringRepresentation(character.ToString());
                         if (typeToInsert != null)
                         {
@@ -68,7 +69,7 @@ namespace PuzzleConsole.ActorTypes
                             //Type not recognized, so just add a wall/static item with the same character
                             Wall newCustomWall = new Wall();
                             newCustomWall.color = ConsoleColor.White; //default if it's an unknown tile
-                            newCustomWall.characterRepresentation = character.ToString();
+                            newCustomWall.CharacterRepresentation = character.ToString();
                             AddObject(newCustomWall, x, y);
                         }
                     }
@@ -110,7 +111,9 @@ namespace PuzzleConsole.ActorTypes
 
 
 		public Actor GetObjectAtPoint(int x, int y){
-			return Actors [y][x];
+            if (x < 0 || y < 0) return null;
+            if (y >= Actors.Count || x >= Actors[y].Count) return null; 
+            return Actors[y][x];
 		}
 		public Actor GetObjectAtPoint(Point point){
 			return GetObjectAtPoint(point.X, point.Y);
@@ -135,6 +138,19 @@ namespace PuzzleConsole.ActorTypes
                 }
             }
             return null;
+        }
+
+        public ActorLayer Clone() {
+            ActorLayer copyLayer = new ActorLayer(this.Name, this.ZIndex);
+            copyLayer.Height = this.Height;
+            copyLayer.Width = this.Width;
+
+            foreach (List<Actor> row in this.Actors)
+            {
+                List<Actor> newRow = new List<Actor>(row);
+                copyLayer.Actors.Add(newRow);
+            }
+            return copyLayer;
         }
 
     }

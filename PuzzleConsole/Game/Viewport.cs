@@ -24,19 +24,10 @@ namespace PuzzleConsole
 
         public void RenderFrame(List<ActorLayer> layers){
 
-            //copy layers to layersToDraw
+            //Create a new list of layers, cloned and cropped, to draw
             List<ActorLayer> layersToDraw = new List<ActorLayer>();
             foreach (ActorLayer layer in layers.Where(l=>l.Visible)) {
-                ActorLayer copyLayer = new ActorLayer(layer.Name, layer.ZIndex);
-                copyLayer.Height = layer.Height;
-                copyLayer.Width = layer.Width;
-
-                foreach(List<Actor> row in layer.Actors){
-                   List<Actor> newRow = new List<Actor>(row);
-                   copyLayer.Actors.Add(newRow);
-                }
-
-                layersToDraw.Add(copyLayer);
+                layersToDraw.Add(layer.Clone());
             }
 
             //Cookie-cut all layers into the viewport, based on size and camera location
