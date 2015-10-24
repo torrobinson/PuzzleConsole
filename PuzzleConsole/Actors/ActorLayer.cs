@@ -8,6 +8,7 @@ using System.IO;
 
 namespace PuzzleConsole.ActorTypes
 {
+    [Serializable()]
     public class ActorLayer
     {
         public List<List<Actor>> Actors = new List<List<Actor>>();

@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace PuzzleConsole.ActorTypes
 {
-
     public abstract class Actor
     {
         //Positional
@@ -29,6 +29,7 @@ namespace PuzzleConsole.ActorTypes
         public Actor() {
            
         }
+
 
         //Get the location of this object, plus an offset
 		public Point GetLocationAtOffset(int offsetx, int offsety){

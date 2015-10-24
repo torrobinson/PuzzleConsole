@@ -12,6 +12,7 @@ namespace PuzzleConsole.ActorTypes
         public Pebble()
         {
             base.characterRepresentation = ".";
+            base.color = ConsoleColor.Yellow;
         }
     }
 }
