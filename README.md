@@ -1,2 +1,2 @@
 # PuzzleConsole
-A small personal test to attempt 2D rendering of a small game world to the console window.
+Personal test for rendering a 2D game world to the console. Includes pushable objects, dynamic walls, and a view that follows the player.
