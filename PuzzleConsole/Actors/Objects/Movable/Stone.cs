@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.ActorTypes
 {
+    [DefaultCharacterRepresentation("@")]
     public class Stone : Pushable
     {
         public Stone()
@@ -14,12 +15,9 @@ namespace PuzzleConsole.ActorTypes
             base.foreColor = ConsoleColor.Magenta;
         }
 
-        public override string CharacterRepresentation
+        public override void GameTick(EventArgs args)
         {
-            get
-            {
-                return "@";
-            }
+            
         }
     }
 }

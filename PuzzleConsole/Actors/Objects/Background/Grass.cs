@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.ActorTypes
 {
+    [DefaultCharacterRepresentation("░")]
     public class Grass:Actor
     {
         public Grass()
@@ -15,12 +16,9 @@ namespace PuzzleConsole.ActorTypes
             base.foreColor = ConsoleColor.Green;
         }
 
-        public override string CharacterRepresentation
+        public override void GameTick(EventArgs args)
         {
-            get
-            {
-                return "░";
-            }
+
         }
     }
 }

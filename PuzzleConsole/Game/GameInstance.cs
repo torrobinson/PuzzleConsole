@@ -14,9 +14,9 @@ namespace PuzzleConsole.Game
         public List<ActorLayer> Layers;
         public Player Player;
         public Viewport view;
+        public int TickCount;
 
         private Timer clock;
-        private int tickCount;
         private bool paused = false;
         private ActorLayer pausedLayer;
 
@@ -101,6 +101,7 @@ namespace PuzzleConsole.Game
             //Create a viewport sized for this map
             //Viewport view = new Viewport(wallsAndItems.Height, wallsAndItems.Width);
             view = new Viewport(20, 30);
+            view.CameraLocation = Player.Location;
 
             //Start the game clock
             clock.Start();
@@ -136,7 +137,7 @@ namespace PuzzleConsole.Game
         {
             //Send the Tick event to all subscribers
 
-            tickCount++;
+            TickCount++;
 
             var tickHandler = TickHandler;
             if (tickHandler != null)

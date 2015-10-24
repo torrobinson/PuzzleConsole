@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.ActorTypes
 {
+    [DefaultCharacterRepresentation("█")]
     public class Wall : Actor
     {
         private string customCharacter;
-
         private string udlr = "╬";
         private string ur = "╚";
         private string ul = "╝";
@@ -27,6 +27,11 @@ namespace PuzzleConsole.ActorTypes
             base.foreColor = ConsoleColor.DarkGray;
         }
 
+        public override void GameTick(EventArgs args)
+        {
+
+        }
+
         public override string CharacterRepresentation
         {
             get
@@ -34,7 +39,7 @@ namespace PuzzleConsole.ActorTypes
                 //If not part of a world, use the generic wall block
                 if (this.Layer == null)
                 {
-                    return "█";
+                    return base.CharacterRepresentation ;
                 }
                 else {
                     if (String.IsNullOrEmpty(customCharacter))

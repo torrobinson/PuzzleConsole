@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.ActorTypes
 {
+    [DefaultCharacterRepresentation("X")]
     public class Metal : Actor
     {
         public Metal()
@@ -15,12 +16,9 @@ namespace PuzzleConsole.ActorTypes
             base.backColor = ConsoleColor.DarkGray;
         }
 
-        public override string CharacterRepresentation
+        public override void GameTick(EventArgs args)
         {
-            get
-            {
-                return "X";
-            }
+
         }
     }
 }

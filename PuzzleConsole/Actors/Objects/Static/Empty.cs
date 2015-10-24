@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.ActorTypes
 {
+    [DefaultCharacterRepresentation(" ")]
     public class Empty : Actor
     {
         public Empty()
@@ -14,12 +15,9 @@ namespace PuzzleConsole.ActorTypes
             base.Clippable = true;
         }
 
-        public override string CharacterRepresentation
+        public override void GameTick(EventArgs args)
         {
-            get
-            {
-                return " ";
-            }
+
         }
     }
 }

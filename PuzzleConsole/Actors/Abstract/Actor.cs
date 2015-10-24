@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 
 namespace PuzzleConsole.ActorTypes
 {
+    [DefaultCharacterRepresentation(" ")]
     public abstract class Actor : IDisposable
     {
         //Positional
@@ -26,8 +27,15 @@ namespace PuzzleConsole.ActorTypes
 
         public virtual string CharacterRepresentation
         {
-            get {return " ";}
+            get { return ((DefaultCharacterRepresentation)Attribute.GetCustomAttribute(this.GetType(), typeof(DefaultCharacterRepresentation))).character; }
             set {}
+        }
+
+        public GameInstance Game
+        {
+            get{
+                return this.Layer.GameInstance;
+            }
         }
 
         public ConsoleColor foreColor = ConsoleColor.White;
@@ -44,9 +52,7 @@ namespace PuzzleConsole.ActorTypes
             GameInstance.TickHandler -= (sender, args) => GameTick(args);
         }
 
-        public void GameTick(EventArgs args){
-            
-        }
+        public abstract void GameTick(EventArgs args);
 
 
         //Get the location of this object, plus an offset
@@ -70,7 +76,7 @@ namespace PuzzleConsole.ActorTypes
                 return null;
             }
 
-            IEnumerable<ActorLayer> possibleBackgroundLayers = Layer.GameInstance.Layers.Where(l => l.ZIndex < this.Layer.ZIndex);
+            IEnumerable<ActorLayer> possibleBackgroundLayers = Game.Layers.Where(l => l.ZIndex < this.Layer.ZIndex);
             ActorLayer layerBelow = null;
             
             if(possibleBackgroundLayers.Any()){
@@ -119,11 +125,21 @@ namespace PuzzleConsole.ActorTypes
     }
 
     public static class WorldObjectHelpers {
-   
-        public static Type GetSubclassForStringRepresentation(string representation) {
-            foreach(Type typ in Assembly.GetAssembly(typeof(Actor)).GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(Actor)))){
-                if (((Actor)Activator.CreateInstance(typ)).CharacterRepresentation == representation) {
-                    return typ;
+
+        public static Type GetSubclassForStringRepresentation(string representation)
+        {
+            if (representation == "+") {
+                string foo = "bar";
+            }
+            
+            foreach (Type typ in Assembly.GetAssembly(typeof(Actor)).GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(Actor))))
+            {
+                //if (((Actor)Activator.CreateInstance(typ)).CharacterRepresentation == representation) {
+                if (((DefaultCharacterRepresentation)Attribute.GetCustomAttribute(typ, typeof(DefaultCharacterRepresentation))).character == representation)
+                {
+                    {
+                        return typ;
+                    }
                 }
             }
             return null;

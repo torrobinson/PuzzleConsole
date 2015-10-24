@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.ActorTypes
 {
-    [DefaultCharacterRepresentation("?")]
-    public class OutOfBounds : Empty
-    {
-        public OutOfBounds()
+    [DefaultCharacterRepresentation("M")]
+    public class MoveTest : MovesOnOwn {
+        public MoveTest()
         {
+            base.foreColor = ConsoleColor.Red;
+            base.backColor = ConsoleColor.DarkRed;
         }
     }
 }
