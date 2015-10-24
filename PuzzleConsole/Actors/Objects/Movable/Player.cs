@@ -10,8 +10,15 @@ namespace PuzzleConsole.ActorTypes
     public class Player: Movable
     {
         public Player() {
-            base.characterRepresentation = "+";
             base.color = ConsoleColor.Red;
+        }
+
+        public override string CharacterRepresentation
+        {
+            get
+            {
+               return "M";
+            }
         }
     }
 }

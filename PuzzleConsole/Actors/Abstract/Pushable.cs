@@ -9,10 +9,7 @@ namespace PuzzleConsole.ActorTypes
 {
     public abstract class Pushable : Movable
     {
-
         public Pushable(){
-
         }
-
     }
 }

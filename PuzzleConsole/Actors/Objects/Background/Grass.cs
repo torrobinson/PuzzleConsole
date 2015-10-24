@@ -11,8 +11,15 @@ namespace PuzzleConsole.ActorTypes
     {
         public Grass()
         {
-            base.characterRepresentation = "░";
             base.color = ConsoleColor.DarkGreen;
+        }
+
+        public override string CharacterRepresentation
+        {
+            get
+            {
+                return "░";
+            }
         }
     }
 }

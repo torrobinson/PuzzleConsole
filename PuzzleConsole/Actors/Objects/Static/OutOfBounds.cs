@@ -7,18 +7,17 @@ using System.Threading.Tasks;
 
 namespace PuzzleConsole.ActorTypes
 {
-    public class Empty : Actor
+    public class OutOfBounds : Empty
     {
-        public Empty()
+        public OutOfBounds()
         {
-            base.Clippable = true;
         }
 
         public override string CharacterRepresentation
         {
             get
             {
-                return " ";
+                return "?";
             }
         }
     }
