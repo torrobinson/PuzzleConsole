@@ -41,32 +41,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\Objects\Static\Empty.cs" />
     <Compile Include="Game\Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Viewport.cs" />
-    <Compile Include="WorldTypes\Abstract\Movable.cs" />
-    <Compile Include="WorldTypes\Abstract\Pushable.cs" />
-    <Compile Include="WorldTypes\Objects\Background\Grass.cs" />
-    <Compile Include="WorldTypes\Objects\Movable\Pebble.cs" />
-    <Compile Include="WorldTypes\Objects\Movable\Stone.cs" />
-    <Compile Include="WorldTypes\Objects\Movable\Player.cs" />
-    <Compile Include="WorldTypes\Objects\Static\Wall.cs" />
-    <Compile Include="WorldTypes\ActorLayer.cs" />
-    <Compile Include="WorldTypes\Abstract\Actor.cs" />
-    <Compile Include="Common.cs" />
+    <Compile Include="Game\Viewport.cs" />
+    <Compile Include="Actors\Abstract\Movable.cs" />
+    <Compile Include="Actors\Abstract\Pushable.cs" />
+    <Compile Include="Actors\Objects\Background\Grass.cs" />
+    <Compile Include="Actors\Objects\Movable\Pebble.cs" />
+    <Compile Include="Actors\Objects\Movable\Stone.cs" />
+    <Compile Include="Actors\Objects\Movable\Player.cs" />
+    <Compile Include="Actors\Objects\Static\Wall.cs" />
+    <Compile Include="Actors\ActorLayer.cs" />
+    <Compile Include="Actors\Abstract\Actor.cs" />
+    <Compile Include="Game\Common.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="foreground.txt">
+    <Content Include="Maps\foreground.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="background.txt">
+    <Content Include="Maps\background.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="walls_and_items.txt">
+    <Content Include="Maps\walls_and_items.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

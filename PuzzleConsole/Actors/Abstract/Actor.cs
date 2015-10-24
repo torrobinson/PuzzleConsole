@@ -1,5 +1,5 @@
 ﻿using PuzzleConsole.Game;
-using PuzzleConsole.WorldTypes;
+using PuzzleConsole.ActorTypes;
 using PuzzleConsole;
 using System;
 using System.Collections.Generic;
@@ -8,18 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace PuzzleConsole.WorldTypes
+namespace PuzzleConsole.ActorTypes
 {
 
     public abstract class Actor
     {
         //Positional
-        public ActorLayer World;
+        public ActorLayer Layer;
         public Point Location;
 
         //Attributes
         public bool Static = true;
         public bool Visible = true;
+        public bool Clippable = false; //can be walked through
         //public int Zindex = 0; //not implemented yet
 
         public string characterRepresentation = " ";
@@ -42,19 +43,31 @@ namespace PuzzleConsole.WorldTypes
 			);	
 		}
 
+        //Return whether there is anything above this actor, given other layers to check
+        public bool IsAnythingAbove(List<ActorLayer> layers){
+            //Go through any layers with a higher zindex
+            foreach(ActorLayer layer in layers.Where(l => l.ZIndex > this.Layer.ZIndex)){
+                //And check to see if another object occupies this same location
+                if(!layer.IsSpaceFree(this.Location.X, this.Location.Y)){
+                    return true;
+                }
+            }
+                return false;
+        }
+
         //Returns the object (if any) 1 tile away from this object int he given direction
 		public Actor GetObjectInDirection(PuzzleConsole.Common.Direction direction){
 			Point offset = PuzzleConsole.Common.DirectionToPointOffset(direction);
-            return World.GetObjectAtPoint(GetLocationAtOffset(offset.X,offset.Y));
+            return Layer.GetObjectAtPoint(GetLocationAtOffset(offset.X,offset.Y));
 		}
 
         //Refreshes the parent World with the updated location of this item
         public void UpdateWorldObjectsArrayWithNewLocation(Point oldLocation){
             //remove from old location
-            World.Actors[oldLocation.Y][oldLocation.X] = null;
+            Layer.Actors[oldLocation.Y][oldLocation.X] = new Empty();
 
             //insert into new location
-            World.Actors[Location.Y][Location.X] = this;
+            Layer.Actors[Location.Y][Location.X] = this;
         }
 
         //Override the ToString for debugging and console rendering

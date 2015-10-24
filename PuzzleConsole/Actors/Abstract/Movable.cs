@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using PuzzleConsole.Game;
 
-namespace PuzzleConsole.WorldTypes
+namespace PuzzleConsole.ActorTypes
 {
     public abstract class Movable : Actor
     {
@@ -22,10 +22,10 @@ namespace PuzzleConsole.WorldTypes
 		public bool canMove(PuzzleConsole.Common.Direction inDirection){
 			Actor objectPossiblyInWay = GetObjectInDirection (inDirection);
 
-            //if object doesnt exist
-            if (objectPossiblyInWay == null)
+            //if object can be moved into
+            if (objectPossiblyInWay.Clippable)
             { 
-                return true; //allow moving to an empty space
+                return true; //allow moving to
             }
 
             //or it can be pushed out of the way

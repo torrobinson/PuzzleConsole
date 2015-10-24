@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using PuzzleConsole.Game;
 using System.IO;
 
-namespace PuzzleConsole.WorldTypes
+namespace PuzzleConsole.ActorTypes
 {
     public class ActorLayer
     {
@@ -15,11 +15,11 @@ namespace PuzzleConsole.WorldTypes
         public int Height = 0;
         public int ZIndex = 0; // -1 = below base, 0 = base, 1 = above base
         public bool Visible = true;
+        public string Name = "Layer";
 
-        public ActorLayer(int width, int height, int zIndex) {
-            this.Width = width;
-            this.Height = height;
+        public ActorLayer(string name, int zIndex) {
             this.ZIndex = zIndex;
+            this.Name = name;
         }
 
         private void InitializeAsEmpty(int width, int height) {
@@ -29,7 +29,7 @@ namespace PuzzleConsole.WorldTypes
                 List<Actor> row = new List<Actor>();
                 for (var w = 0; w < width; w++)
                 {
-                    row.Add(null);
+                    row.Add(new Empty());
                 }
                 Actors.Add(row);
             }
@@ -76,6 +76,9 @@ namespace PuzzleConsole.WorldTypes
                 x = 0;
                 y++;
             }
+
+            height = y + 1;
+            width = x + 1;
         }
 
         public void AddObject(Actor obj, int x, int y) {
@@ -87,17 +90,20 @@ namespace PuzzleConsole.WorldTypes
                 SetObjectAtPoint(obj, specifiedPoint);
 
 				//Set the object's world to this world
-				obj.World = this;
+				obj.Layer = this;
                 obj.Location = specifiedPoint;
             }
         }
 
         public bool IsSpaceFree(int x, int y) {
 
-            if (x < 0 || y < 0) return false;
-            if (x > Actors[0].Count() || y > Actors.Count()) return false;
+            if (Actors[0] == null) return false; //if theres nost even a row here
+            if (x < 0 || y < 0) return false;    //if the space is out of lower bounds
+            if (y > Actors.Count() - 1 || x > Actors[y].Count() - 1) return false; //if the space is out of higher bounds
 
-            return Actors == null || Actors[y][x] == null;
+            //Space is available to check
+
+            return Actors == null || Actors[y] == null || Actors[y][x].GetType() == typeof(Empty); 
         }
 
 

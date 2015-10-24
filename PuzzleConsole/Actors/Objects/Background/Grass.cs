@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PuzzleConsole.WorldTypes
+namespace PuzzleConsole.ActorTypes
 {
     public class Grass:Actor
     {

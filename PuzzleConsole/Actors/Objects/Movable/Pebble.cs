@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PuzzleConsole.WorldTypes
+namespace PuzzleConsole.ActorTypes
 {
-    public abstract class Pushable : Movable
+    public class Pebble : Pushable
     {
-
-        public Pushable(){
-
+        public Pebble()
+        {
+            base.characterRepresentation = ".";
         }
-
     }
 }

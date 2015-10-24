@@ -1,5 +1,7 @@
 ﻿using System;
 using PuzzleConsole.Game;
+using PuzzleConsole.ActorTypes;
+using System.Collections.Generic;
 
 namespace PuzzleConsole
 {
@@ -12,6 +14,25 @@ namespace PuzzleConsole
 			Left,
 			Right
 		};
+
+        public static List<List<Actor>> CreateLayer(int height, int width, Type defaultType = null)
+        {
+            List<List<Actor>> layer = new List<List<Actor>>();
+
+            for(int y = 0; y <= height; y++){
+                List<Actor> row = new List<Actor>();
+
+                for(int x = 0; x <= width; x++){
+                    row.Add(
+                        defaultType == null ? null : (Actor)Activator.CreateInstance(defaultType)
+                        );
+                }
+
+                layer.Add(row);
+            }
+
+            return layer;
+        }
 
 		public static Point DirectionToPointOffset(Direction direction){
 			int offsetx = 0;
