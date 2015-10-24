@@ -101,7 +101,7 @@ namespace PuzzleConsole
 
             for(int y = topPosition;  y < bottomPosition; y++){
                     for (int x = leftPosition; x < rightPosition; x++){
-                        if (x >= 0 && x < original.Width - 1 && y >= 0 && y < original.Height - 1)
+                        if (x >= 0 && x < original.Width && y >= 0 && y < original.Height)
                         {
                             layer.Actors[trimmedYToWrite][trimmedXToWrite] = original.Actors[y][x];
                         }

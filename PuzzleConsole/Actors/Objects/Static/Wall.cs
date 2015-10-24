@@ -31,6 +31,7 @@ namespace PuzzleConsole.ActorTypes
         {
             get
             {
+                //If not part of a world, use the generic wall block
                 if (this.Layer == null)
                 {
                     return "█";

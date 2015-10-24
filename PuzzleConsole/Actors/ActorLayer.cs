@@ -55,32 +55,26 @@ namespace PuzzleConsole.ActorTypes
             {
                 foreach (char character in line)
                 {
-                    if(character != ' '){
-                        //Find the type for this character
-
-                        Type typeToInsert = WorldObjectHelpers.GetSubclassForStringRepresentation(character.ToString());
-                        if (typeToInsert != null)
-                        {
-                            //If we found one, then inject a new one into the world
-                            Actor objToInsert = (Actor)Activator.CreateInstance(typeToInsert);
-                            AddObject(objToInsert, x, y);
-                        }
-                        else {
-                            //Type not recognized, so just add a wall/static item with the same character
-                            Wall newCustomWall = new Wall();
-                            newCustomWall.color = ConsoleColor.White; //default if it's an unknown tile
-                            newCustomWall.CharacterRepresentation = character.ToString();
-                            AddObject(newCustomWall, x, y);
-                        }
+                    //Find the type for this character
+                    Type typeToInsert = WorldObjectHelpers.GetSubclassForStringRepresentation(character.ToString());
+                    if (typeToInsert != null)
+                    {
+                        //If we found one, then inject a new one into the world
+                        Actor objToInsert = (Actor)Activator.CreateInstance(typeToInsert);
+                        AddObject(objToInsert, x, y);
+                    }
+                    else {
+                        //Type not recognized, so just add a wall/static item with the same character
+                        Wall newCustomWall = new Wall();
+                        newCustomWall.color = ConsoleColor.White; //default if it's an unknown tile
+                        newCustomWall.CharacterRepresentation = character.ToString();
+                        AddObject(newCustomWall, x, y);
                     }
                     x++;
                 }
                 x = 0;
                 y++;
             }
-
-            height = y + 1;
-            width = x + 1;
         }
 
         public void AddObject(Actor obj, int x, int y) {
