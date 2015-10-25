@@ -10,35 +10,37 @@ namespace PuzzleConsole.ActorTypes
 {
     public abstract class MovesOnOwn : Movable
     {
-        public double blocksPerTick = 0.1; // blocks per tick. 0.1 means 1 block per 10 ticks, at 20 ticks a second = 2 blocks per second
-       
+        public double speedBlocksPerTick = 0.5; //0.1 bpt = 1 bp 10 t @ 20 tps. = 2 BPS.    0.05 = 1 BPS    0.5=10 times a second
+        private Random random;
+
         public MovesOnOwn()
         {
             if (Represents == null) {
                 base.SubscribeToTicks();
+                random = new Random();
             }
             
         }
 
         public override void GameTick(EventArgs args)
         {
-            if( Game.TickCount % (blocksPerTick * Game.TickCount) ==  0){
-                Move(Common.Direction.Right);
+            if (Convert.ToInt32(speedBlocksPerTick * Game.TickCount) == (speedBlocksPerTick * Game.TickCount))
+            {
+                MakeNextMove();
             }
         }
 
-		public void Move(PuzzleConsole.Common.Direction inDirection){
-            
-			if (canMove (inDirection)) {
+        private List<Common.Direction> movePattern = new List<Common.Direction>() { 
+            Common.Direction.Up,
+            Common.Direction.Right,
+            Common.Direction.Down,
+            Common.Direction.Left
+        };
 
-                Point oldLocation = Location;
-
-                Location = Location.Add(
-                    PuzzleConsole.Common.DirectionToPointOffset(inDirection)
-                    );
-
-                UpdateWorldObjectsArrayWithNewLocation(oldLocation);
-			}
-		}
+        private int moveIndex = 0;
+        public void MakeNextMove() {
+            while (!Move(movePattern[random.Next(0, movePattern.Count)])) {
+            }
+        }
     }
 }

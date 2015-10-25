@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+
 using System.Timers;
 
 namespace PuzzleConsole.Game
@@ -16,7 +18,7 @@ namespace PuzzleConsole.Game
         public Viewport view;
         public int TickCount;
 
-        private Timer clock;
+        private System.Threading.Timer clock;
         private bool paused = false;
         private ActorLayer pausedLayer;
 
@@ -99,51 +101,38 @@ namespace PuzzleConsole.Game
             Player = (Player)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Player));
 
             //Create a viewport sized for this map
-            //Viewport view = new Viewport(wallsAndItems.Height, wallsAndItems.Width);
             view = new Viewport(20, 30);
             view.CameraLocation = Player.Location;
 
-            //Start the game clock
-            clock.Start();
-
+            //Read user keyboard input
             RenderAndInput();
-        }
-
-        public void Stop() {
-            //Stop the game clock
-            clock.Stop();
         }
 
         public void Pause() {
             Layers.Add(pausedLayer);
-            clock.Stop();
+            clock.Change(Timeout.Infinite, Timeout.Infinite);
             paused = true;
         }
 
         public void Resume() {
             Layers.Remove(pausedLayer);
-            clock.Start();
+            initializeClock();
             paused = false;
 
         }
 
         private void initializeClock() {
-            clock = new Timer(1000/TicksPerSecond);
-            clock.Elapsed += Tick(new EventArgs());
+            TimerCallback tcb = Tick;
+            clock = new System.Threading.Timer(tcb, null, 0, 1000 / TicksPerSecond);
         }
 
         public static event EventHandler TickHandler;
-        public ElapsedEventHandler Tick(EventArgs args)
+        public void Tick(object state)
         {
-            //Send the Tick event to all subscribers
-
             TickCount++;
-
             var tickHandler = TickHandler;
             if (tickHandler != null)
-                tickHandler(this, args);
-
-            return null;
+                tickHandler(this, new EventArgs());
         }
 
         

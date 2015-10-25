@@ -39,9 +39,10 @@ namespace PuzzleConsole.ActorTypes
 			return false;
         }
 
-		public void Move(PuzzleConsole.Common.Direction inDirection){
-            
-			if (canMove (inDirection)) {
+		public bool Move(PuzzleConsole.Common.Direction inDirection){
+
+            if (canMove(inDirection))
+            {
 
                 Point oldLocation = Location;
 
@@ -50,7 +51,11 @@ namespace PuzzleConsole.ActorTypes
                     );
 
                 UpdateWorldObjectsArrayWithNewLocation(oldLocation);
-			}
+                return true;
+            }
+            else {
+                return false;
+            }
 		}
     }
 }

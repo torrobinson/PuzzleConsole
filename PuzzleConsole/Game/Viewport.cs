@@ -78,6 +78,8 @@ namespace PuzzleConsole
                 Console.BackgroundColor = backColor;
                 Console.ForegroundColor = foreColor;
                 Console.Write(str);
+
+                Console.BackgroundColor = ConsoleColor.Black;
                 Console.SetCursorPosition(0, 0); //otherwise characters surrounding the crrent position will be overwritten with the key the user pressed!
             }
             catch (ArgumentOutOfRangeException e){}
