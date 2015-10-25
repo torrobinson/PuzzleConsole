@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actors\Abstract\MovesOnOwn.cs" />
+    <Compile Include="Actors\Abstract\RandomMover.cs" />
     <Compile Include="Actors\DefaultCharacterRepresentation.cs" />
     <Compile Include="Actors\Objects\Movable\MoveTest.cs" />
     <Compile Include="Actors\Objects\Static\Custom.cs" />

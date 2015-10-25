@@ -111,6 +111,10 @@ namespace PuzzleConsole.ActorTypes
         public void Dispose() {
             UnsubscribeFromTicks();
         }
+
+        public bool IsPushable() {
+            return this.GetType().IsSubclassOf(typeof(Pushable));
+        }
     }
 
     public static class ActorHelpers {

@@ -23,35 +23,50 @@ namespace PuzzleConsole.ActorTypes
         //Helper for checking if this object can move in any given directions
 		public bool canMove(PuzzleConsole.Common.Direction inDirection){
 
-            //First check if movement is diagonal - because if it is, the 2 blocks making nup the digonal movement need to be open first
-            bool diagonalPossible = true;
+            //First check if the direction is even valid.
+            //Here we'll keep movement from happening diagonally if botht he diagonal's cardinal directions are full
+            bool movementInDirectionPossible = true;
             if (Common.GetDiagonalDirections().Contains(inDirection))
             {
                 if (inDirection == Common.Direction.UpLeft)
-                    diagonalPossible =  GetObjectInDirection(Common.Direction.Up).Clippable || GetObjectInDirection(Common.Direction.Left).Clippable;
+                    movementInDirectionPossible = GetObjectInDirection(Common.Direction.Up).Clippable || GetObjectInDirection(Common.Direction.Left).Clippable;
 
                 if (inDirection == Common.Direction.UpRight)
-                    diagonalPossible = GetObjectInDirection(Common.Direction.Up).Clippable || GetObjectInDirection(Common.Direction.Right).Clippable;
+                    movementInDirectionPossible = GetObjectInDirection(Common.Direction.Up).Clippable || GetObjectInDirection(Common.Direction.Right).Clippable;
 
                 if (inDirection == Common.Direction.DownLeft)
-                    diagonalPossible = GetObjectInDirection(Common.Direction.Down).Clippable || GetObjectInDirection(Common.Direction.Left).Clippable;
+                    movementInDirectionPossible = GetObjectInDirection(Common.Direction.Down).Clippable || GetObjectInDirection(Common.Direction.Left).Clippable;
 
                 if (inDirection == Common.Direction.DownRight)
-                    diagonalPossible = GetObjectInDirection(Common.Direction.Down).Clippable || GetObjectInDirection(Common.Direction.Right).Clippable;
+                    movementInDirectionPossible = GetObjectInDirection(Common.Direction.Down).Clippable || GetObjectInDirection(Common.Direction.Right).Clippable;
             }
 
-            //Or just a simple caridnal direction
-            Actor objectPossiblyInWay = GetObjectInDirection(inDirection);
-            //if object can be moved into
-            if (objectPossiblyInWay.Clippable && diagonalPossible)
-            {
-                return true; //allow moving to
-            }
-            //or it can be pushed out of the way
-            if (diagonalPossible && objectPossiblyInWay != null && objectPossiblyInWay.GetType().IsSubclassOf(typeof(Pushable)) && ((Pushable)objectPossiblyInWay).canMove(inDirection))
-            {
-                ((Pushable)objectPossiblyInWay).Move(inDirection); //kick-off the push
-                return true; //allow moving to the now-empty spot
+            //Before bothering to check for pieces in the way, ensure that the direction is valid
+            if (movementInDirectionPossible) {
+                
+                //Then check if the target location is free to move to.
+                //Either it's free or the object there will be pushed (making it free)
+
+                Actor objectPossiblyInWay = GetObjectInDirection(inDirection);
+
+                //If there's a null there (shoudlnt happen because we should have an Empty clippable piece here)
+                if (objectPossiblyInWay == null)
+                {
+                    return true;
+                }
+
+                //if object can be moved into (including if there's just an empty piece here)
+                if (objectPossiblyInWay.Clippable)
+                {
+                    return true; //allow moving to
+                }
+
+                //or it can be pushed out of the way
+                if (movementInDirectionPossible && objectPossiblyInWay.IsPushable() && ((Pushable)objectPossiblyInWay).canMove(inDirection))
+                {
+                    ((Pushable)objectPossiblyInWay).Move(inDirection); //kick-off the push
+                    return true; //allow moving to the now-empty spot
+                }
             }
                    
             //Otherwise it can't move in that direction
@@ -60,19 +75,20 @@ namespace PuzzleConsole.ActorTypes
 
 		public bool Move(PuzzleConsole.Common.Direction inDirection){
 
-            //Regardless, at least turn in the direction you try to move to
+            //First turn the actor in the desired direction
             Direction = inDirection;
 
+            //And then move if it's possible
             if (canMove(inDirection))
             {
-
                 Point oldLocation = Location;
 
                 Location = Location.Add(
                     PuzzleConsole.Common.DirectionToPointOffset(inDirection)
                     );
 
-                //Tell the layer I'm on where I moved to
+
+                //Then tell the layer I'm on where I moved to
                 //remove from old location
                 Layer.Actors[oldLocation.Y][oldLocation.X] = new Empty();
 
