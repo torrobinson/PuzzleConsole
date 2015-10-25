@@ -68,10 +68,8 @@ namespace PuzzleConsole.ActorTypes
 			);	
 		}
 
-        //Return whether there is anything above this actor, given other layers to check
+        //Return whether there is anything below this actor
         public Actor GetFirstObjectBelow(){
-            //Find the first layer below
-
             if (Layer == null) {
                 return null;
             }
@@ -99,7 +97,7 @@ namespace PuzzleConsole.ActorTypes
             }
         }
 
-        //Returns the object (if any) 1 tile away from this object int he given direction
+        //Returns the object (if any) 1 tile away from this object in the given direction
 		public Actor GetObjectInDirection(PuzzleConsole.Common.Direction direction){
 			Point offset = PuzzleConsole.Common.DirectionToPointOffset(direction);
             return Layer.GetObjectAtPoint(GetLocationAtOffset(offset.X,offset.Y));
@@ -115,17 +113,12 @@ namespace PuzzleConsole.ActorTypes
         }
     }
 
-    public static class WorldObjectHelpers {
+    public static class ActorHelpers {
 
         public static Type GetSubclassForStringRepresentation(string representation)
         {
-            if (representation == "+") {
-                string foo = "bar";
-            }
-            
             foreach (Type typ in Assembly.GetAssembly(typeof(Actor)).GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(Actor))))
             {
-                //if (((Actor)Activator.CreateInstance(typ)).CharacterRepresentation == representation) {
                 if (((DefaultCharacterRepresentation)Attribute.GetCustomAttribute(typ, typeof(DefaultCharacterRepresentation))).character == representation)
                 {
                     {

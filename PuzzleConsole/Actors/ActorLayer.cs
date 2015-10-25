@@ -59,7 +59,7 @@ namespace PuzzleConsole.ActorTypes
                 foreach (char character in line)
                 {
                     //Find the type for this character
-                    Type typeToInsert = WorldObjectHelpers.GetSubclassForStringRepresentation(character.ToString());
+                    Type typeToInsert = ActorHelpers.GetSubclassForStringRepresentation(character.ToString());
                     if (typeToInsert != null)
                     {
                         //If we found one, then inject a new one into the world

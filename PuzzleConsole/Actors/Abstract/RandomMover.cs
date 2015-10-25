@@ -10,7 +10,7 @@ namespace PuzzleConsole.ActorTypes
 {
     public abstract class RandomMover : Pushable
     {
-        public double speedBlocksPerTick = 0.5; //0.1 bpt = 1 bp 10 t @ 20 tps. = 2 BPS.    0.05 = 1 BPS    0.5=10 times a second
+        public double speedBlocksPerTick = 0.5; // @ 20 ticks per second: 0.1 bpt = 2 bps, 0.05 bpt = 1 bps,  0.5 bpt = 10 bps
         private Random random;
 
         public RandomMover()
