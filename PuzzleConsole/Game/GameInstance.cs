@@ -43,18 +43,37 @@ namespace PuzzleConsole.Game
                     //Pause and capture movements
                     switch (Console.ReadKey(false).Key)
                     {
-                        case ConsoleKey.UpArrow:
+                        case ConsoleKey.NumPad8:
                             Player.Move(Common.Direction.Up);
                             break;
-                        case ConsoleKey.DownArrow:
+                        case ConsoleKey.NumPad2:
                             Player.Move(Common.Direction.Down);
                             break;
-                        case ConsoleKey.LeftArrow:
+                        case ConsoleKey.NumPad5:
+                            Player.Move(Common.Direction.Down);
+                            break;
+                        case ConsoleKey.NumPad4:
                             Player.Move(Common.Direction.Left);
                             break;
-                        case ConsoleKey.RightArrow:
+                        case ConsoleKey.NumPad6:
                             Player.Move(Common.Direction.Right);
                             break;
+
+                        case ConsoleKey.NumPad7:
+                            Player.Move(Common.Direction.UpLeft);
+                            break;
+                        case ConsoleKey.NumPad9:
+                            Player.Move(Common.Direction.UpRight);
+                            break;
+                        case ConsoleKey.NumPad1:
+                            Player.Move(Common.Direction.DownLeft);
+                            break;
+                        case ConsoleKey.NumPad3:
+                            Player.Move(Common.Direction.DownRight);
+                            break;
+
+
+
                         case ConsoleKey.Escape:
                             Pause();
                             break;
@@ -93,7 +112,7 @@ namespace PuzzleConsole.Game
             background.InitializeFromFile("Maps/background.txt");
 
             //initialize the pause menu/layer
-            pausedLayer = new ActorLayer("Paused layer", -99999, (GameInstance)this);
+            pausedLayer = new ActorLayer("Paused layer", -999, (GameInstance)this);
             pausedLayer.InitializeFromFile("Maps/paused.txt");
             pausedLayer.AlwaysCentered = true;
 
@@ -101,7 +120,7 @@ namespace PuzzleConsole.Game
             Player = (Player)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Player));
 
             //Create a viewport sized for this map
-            view = new Viewport(20, 30);
+            view = new Viewport(25, 30);
             view.CameraLocation = Player.Location;
 
             //Read user keyboard input

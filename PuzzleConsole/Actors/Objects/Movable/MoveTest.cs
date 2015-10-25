@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PuzzleConsole.ActorTypes
 {
     [DefaultCharacterRepresentation("M")]
-    public class MoveTest : MovesOnOwn {
+    public class MoveTest : RandomMover {
         public MoveTest()
         {
             base.foreColor = ConsoleColor.Red;

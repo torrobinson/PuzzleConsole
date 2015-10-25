@@ -8,12 +8,12 @@ using PuzzleConsole.Game;
 
 namespace PuzzleConsole.ActorTypes
 {
-    public abstract class MovesOnOwn : Movable
+    public abstract class RandomMover : Pushable
     {
         public double speedBlocksPerTick = 0.5; //0.1 bpt = 1 bp 10 t @ 20 tps. = 2 BPS.    0.05 = 1 BPS    0.5=10 times a second
         private Random random;
 
-        public MovesOnOwn()
+        public RandomMover()
         {
             if (Represents == null) {
                 base.SubscribeToTicks();
@@ -30,12 +30,7 @@ namespace PuzzleConsole.ActorTypes
             }
         }
 
-        private List<Common.Direction> movePattern = new List<Common.Direction>() { 
-            Common.Direction.Up,
-            Common.Direction.Right,
-            Common.Direction.Down,
-            Common.Direction.Left
-        };
+        private List<Common.Direction> movePattern = Common.GetAllDirections();
 
         private int moveIndex = 0;
         public void MakeNextMove() {

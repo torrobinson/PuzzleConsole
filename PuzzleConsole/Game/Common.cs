@@ -15,8 +15,48 @@ namespace PuzzleConsole
 			Up,
 			Down,
 			Left,
-			Right
+			Right,
+            UpLeft,
+            UpRight,
+            DownLeft,
+            DownRight
 		};
+
+        public static List<Common.Direction> GetAllDirections(){
+            return new List<Common.Direction>
+            {
+                Common.Direction.Up,
+                Common.Direction.Right,
+                Common.Direction.Down,
+                Common.Direction.Left,
+                Common.Direction.UpLeft,
+                Common.Direction.UpRight,
+                Common.Direction.DownLeft,
+                Common.Direction.DownRight
+            };
+        }
+
+        public static List<Common.Direction> GetCardinalDirections()
+        {
+            return new List<Common.Direction>
+            {
+                Common.Direction.Up,
+                Common.Direction.Right,
+                Common.Direction.Down,
+                Common.Direction.Left,
+            };
+        }
+
+        public static List<Common.Direction> GetDiagonalDirections()
+        {
+            return new List<Common.Direction>
+            {
+                Common.Direction.UpLeft,
+                Common.Direction.UpRight,
+                Common.Direction.DownLeft,
+                Common.Direction.DownRight
+            };
+        } 
 
         public static List<List<Actor>> CreateLayer(int height, int width, Type defaultType = null)
         {
@@ -62,6 +102,26 @@ namespace PuzzleConsole
 				offsetx = 1;
 				offsety = 0;	
 				break;
+
+            case PuzzleConsole.Common.Direction.UpLeft:
+                offsetx = -1;
+                offsety = -1;
+                break;
+
+            case PuzzleConsole.Common.Direction.UpRight:
+                offsetx = 1;
+                offsety = -1;
+                break;
+
+            case PuzzleConsole.Common.Direction.DownLeft:
+                offsetx = -1;
+                offsety = 1;
+                break;
+
+            case PuzzleConsole.Common.Direction.DownRight:
+                offsetx = 1;
+                offsety = 1;
+                break;
 
 			default:
 				break;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PuzzleConsole.ActorTypes
 {
     [DefaultCharacterRepresentation("+")]
-    public class Player: Movable
+    public class Player: Pushable
     {
         public Player() {
             base.foreColor = ConsoleColor.Red;

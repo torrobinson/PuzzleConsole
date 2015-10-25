@@ -105,15 +105,6 @@ namespace PuzzleConsole.ActorTypes
             return Layer.GetObjectAtPoint(GetLocationAtOffset(offset.X,offset.Y));
 		}
 
-        //Refreshes the parent World with the updated location of this item
-        public void UpdateWorldObjectsArrayWithNewLocation(Point oldLocation){
-            //remove from old location
-            Layer.Actors[oldLocation.Y][oldLocation.X] = new Empty();
-
-            //insert into new location
-            Layer.Actors[Location.Y][Location.X] = this;
-        }
-
         //Override the ToString for debugging and console rendering
         public override string ToString() {
             return CharacterRepresentation;
