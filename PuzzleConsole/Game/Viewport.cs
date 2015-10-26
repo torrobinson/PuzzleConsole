@@ -15,6 +15,7 @@ namespace PuzzleConsole
         public Point CameraLocation;
         private List<List<Actor>> currentFrame = null;
         private List<List<Actor>> previousFrame = null;
+        
 
         public Viewport(int height, int width) {
             this.Height = height;
@@ -23,7 +24,6 @@ namespace PuzzleConsole
         }
 
         public void RenderFrame(List<ActorLayer> layers){
-
             //Create a new list of layers, cloned and cropped, to draw
             List<ActorLayer> layersToDraw = new List<ActorLayer>();
             foreach (ActorLayer layer in layers.Where(l=>l.Visible)) {
@@ -66,7 +66,7 @@ namespace PuzzleConsole
             //Store the successfully rendered frame for next time
             previousFrame = currentFrame;
 
-            //
+            //Finish up
             layersToDraw = null;
         }
 

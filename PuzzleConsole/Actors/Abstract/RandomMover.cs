@@ -12,6 +12,7 @@ namespace PuzzleConsole.ActorTypes
     {
         public double speedBlocksPerTick = 0.5; // @ 20 ticks per second: 0.1 bpt = 2 bps, 0.05 bpt = 1 bps,  0.5 bpt = 10 bps
         private Random random;
+        private Common.Direction lastDirection;
 
         public RandomMover()
         {
@@ -34,8 +35,12 @@ namespace PuzzleConsole.ActorTypes
 
         private int moveIndex = 0;
         public void MakeNextMove() {
-            while (!Move(movePattern[random.Next(0, movePattern.Count)])) {
-            }
+
+
+             //Try until you moved in a direction
+             while (!Move(movePattern[random.Next(0, movePattern.Count)])) { }
+
+           // lastDirection = direction;
         }
     }
 }

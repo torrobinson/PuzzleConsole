@@ -52,12 +52,14 @@ namespace PuzzleConsole.ActorTypes
                 //If there's a null there (shoudlnt happen because we should have an Empty clippable piece here)
                 if (objectPossiblyInWay == null)
                 {
+                    PushedActorLastMove = null;
                     return true;
                 }
 
                 //if object can be moved into (including if there's just an empty piece here)
                 if (objectPossiblyInWay.Clippable)
                 {
+                    PushedActorLastMove = null;
                     return true; //allow moving to
                 }
 
@@ -65,6 +67,7 @@ namespace PuzzleConsole.ActorTypes
                 if (movementInDirectionPossible && objectPossiblyInWay.IsPushable() && ((Pushable)objectPossiblyInWay).canMove(inDirection))
                 {
                     ((Pushable)objectPossiblyInWay).Move(inDirection); //kick-off the push
+                    PushedActorLastMove = objectPossiblyInWay; //store which actor we just pushed
                     return true; //allow moving to the now-empty spot
                 }
             }

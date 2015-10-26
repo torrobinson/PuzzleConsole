@@ -13,32 +13,32 @@ namespace PuzzleConsole.Game
     public class GameInstance
     {
         public int TicksPerSecond = 20;
+        public int FramesPerSecond = 90;
+        private object frameSync = new object();
+
         public List<ActorLayer> Layers;
         public Player Player;
         public Viewport view;
+        private ActorLayer pausedLayer;
+        public static event EventHandler TickHandler;
+
+        private System.Threading.Timer gameClock;
+        private System.Threading.Timer frameClock;
         public int TickCount;
 
-        private System.Threading.Timer clock;
         private bool paused = false;
-        private ActorLayer pausedLayer;
-
+        
         public GameInstance() {
         
         }
 
-        public void RenderAndInput() {
+        public void ReadInput() {
 
             //Loop and wait for input
             while (true)
             {
-                //Set the viewports camera location to the player
-                view.CameraLocation = Player.Location;
-
-                //Render the frame using the layers we've defined
-                view.RenderFrame(Layers);
-
                 //Normal game input
-                if (!paused && Console.KeyAvailable)
+                if (Console.KeyAvailable)
                 {
                     //Pause and capture movements
                     switch (Console.ReadKey(false).Key)
@@ -71,35 +71,20 @@ namespace PuzzleConsole.Game
                         case ConsoleKey.NumPad3:
                             Player.Move(Common.Direction.DownRight);
                             break;
-
-
-
                         case ConsoleKey.Escape:
-                            Pause();
+                            TogglePause();
                             break;
                     }
                 }
 
-                //Pause menu input
-                if (paused && Console.KeyAvailable)
-                {
-                    //Pause and capture movements
-                    switch (Console.ReadKey(false).Key)
-                    {
-                        case ConsoleKey.Escape:
-                            Resume();
-                            break;
-                    }
-                }
-                //Cancel out any user text entered
-                Console.Write("\b \b");
             }
         }
 
+
+
+
+
         public void Initialize() {
-            if (clock == null) {
-                initializeClock();
-            }
 
             //Load in some layers of actors
             ActorLayer foreground = new ActorLayer("Foreground stuff", 1, (GameInstance)this);
@@ -123,37 +108,68 @@ namespace PuzzleConsole.Game
             view = new Viewport(25, 30);
             view.CameraLocation = Player.Location;
 
+            //Start the game clock
+            gameClock = new System.Threading.Timer(new TimerCallback(Tick), null, 0, 1000 / TicksPerSecond);
+            frameClock = new System.Threading.Timer(new TimerCallback(FrameTick), null, 0, 1000 / FramesPerSecond);
+
+            //Draw the first frames
+            FrameTick();
+
             //Read user keyboard input
-            RenderAndInput();
+            ReadInput();
         }
 
+
+        //Pausing
         public void Pause() {
-            Layers.Add(pausedLayer);
-            clock.Change(Timeout.Infinite, Timeout.Infinite);
-            paused = true;
+            pausedLayer.Visible = true; 
+            gameClock.Change(Timeout.Infinite, Timeout.Infinite);
+            frameClock.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         public void Resume() {
-            Layers.Remove(pausedLayer);
-            initializeClock();
-            paused = false;
-
+            pausedLayer.Visible = false;
+            gameClock = new System.Threading.Timer(new TimerCallback(Tick), null, 0, 1000 / TicksPerSecond);
+            frameClock = new System.Threading.Timer(new TimerCallback(Tick), null, 0, 1000 / FramesPerSecond);
         }
 
-        private void initializeClock() {
-            TimerCallback tcb = Tick;
-            clock = new System.Threading.Timer(tcb, null, 0, 1000 / TicksPerSecond);
+        public void TogglePause() {
+            if (paused) Resume();
+            else Pause();
+            paused = !paused;
         }
 
-        public static event EventHandler TickHandler;
-        public void Tick(object state)
+
+
+
+
+        
+        public void Tick(object state = null)
         {
             TickCount++;
             var tickHandler = TickHandler;
             if (tickHandler != null)
+            {
                 tickHandler(this, new EventArgs());
+            }
+        }
+
+        public void FrameTick(object state = null)
+        {
+            lock (frameSync) {
+                //Set the viewports camera location to the player
+                view.CameraLocation = Player.Location;
+
+                //Render the frame using the layers we've defined
+                view.RenderFrame(Layers);
+
+                //Cancel out any user text entered
+                Console.Write("\b \b");
+            }
         }
 
         
+
+
     }
 }
