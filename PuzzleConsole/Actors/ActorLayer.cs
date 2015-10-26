@@ -150,5 +150,17 @@ namespace PuzzleConsole.ActorTypes
             return copyLayer;
         }
 
+        public string Value()
+        {
+            string grid = "";
+
+            foreach (List<Actor> row in Actors)
+            {
+                grid += String.Join("", row) + System.Environment.NewLine;
+            }
+
+            return grid;
+        }
+
     }
 }

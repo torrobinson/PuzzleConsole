@@ -18,6 +18,7 @@ namespace PuzzleConsole.ActorTypes
         public ActorLayer Layer;
         public Point Location;
         public Actor Represents; //if this actor is ever out of world but we still want it to represent a real actor in memory
+        public Actor PushedActorLastMove;
 
         //Attributes
         public bool Static = true;
