@@ -32,13 +32,14 @@ namespace PuzzleConsole.Game
         
         }
 
+        //Awaits user input on this thread
         public void ReadInput() {
 
             //Loop and wait for input
             while (true)
             {
                 //Normal game input
-                if (Console.KeyAvailable)
+                if (!paused && Console.KeyAvailable)
                 {
                     //Pause and capture movements
                     switch (Console.ReadKey(false).Key)
@@ -56,6 +57,19 @@ namespace PuzzleConsole.Game
                             Player.Move(Common.Direction.Left);
                             break;
                         case ConsoleKey.NumPad6:
+                            Player.Move(Common.Direction.Right);
+                            break;
+
+                        case ConsoleKey.UpArrow:
+                            Player.Move(Common.Direction.Up);
+                            break;
+                        case ConsoleKey.DownArrow:
+                            Player.Move(Common.Direction.Down);
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            Player.Move(Common.Direction.Left);
+                            break;
+                        case ConsoleKey.RightArrow:
                             Player.Move(Common.Direction.Right);
                             break;
 
@@ -77,13 +91,24 @@ namespace PuzzleConsole.Game
                     }
                 }
 
+                //Paused state input
+                if (paused && Console.KeyAvailable)
+                {
+                    //Pause and capture movements
+                    switch (Console.ReadKey(false).Key)
+                    {
+                        case ConsoleKey.Escape:
+                            TogglePause();
+                            break;
+                    }
+                }
             }
         }
 
 
 
 
-
+        //Starts a game
         public void Initialize() {
 
             //Load in some layers of actors
@@ -100,8 +125,9 @@ namespace PuzzleConsole.Game
             pausedLayer = new ActorLayer("Paused layer", -999, (GameInstance)this);
             pausedLayer.InitializeFromFile("Maps/paused.txt");
             pausedLayer.AlwaysCentered = true;
+            pausedLayer.Visible = false;
 
-            Layers = new List<ActorLayer>() { foreground, wallsAndItems, background };
+            Layers = new List<ActorLayer>() {pausedLayer, foreground, wallsAndItems, background };
             Player = (Player)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Player));
 
             //Create a viewport sized for this map
@@ -109,7 +135,7 @@ namespace PuzzleConsole.Game
             view.CameraLocation = Player.Location;
 
             //Start the game clock
-            gameClock = new System.Threading.Timer(new TimerCallback(Tick), null, 0, 1000 / TicksPerSecond);
+            gameClock = new System.Threading.Timer(new TimerCallback(GameTick), null, 0, 1000 / TicksPerSecond);
             frameClock = new System.Threading.Timer(new TimerCallback(FrameTick), null, 0, 1000 / FramesPerSecond);
 
             //Draw the first frames
@@ -129,22 +155,23 @@ namespace PuzzleConsole.Game
 
         public void Resume() {
             pausedLayer.Visible = false;
-            gameClock = new System.Threading.Timer(new TimerCallback(Tick), null, 0, 1000 / TicksPerSecond);
-            frameClock = new System.Threading.Timer(new TimerCallback(Tick), null, 0, 1000 / FramesPerSecond);
+            gameClock = new System.Threading.Timer(new TimerCallback(GameTick), null, 0, 1000 / TicksPerSecond);
+            frameClock = new System.Threading.Timer(new TimerCallback(FrameTick), null, 0, 1000 / FramesPerSecond);
         }
 
         public void TogglePause() {
             if (paused) Resume();
             else Pause();
             paused = !paused;
+            view.RenderFrame(Layers); //otherwise the shift to a pause state wont be rendered (since we stopped the frame clock)
         }
 
 
 
 
 
-        
-        public void Tick(object state = null)
+        //Ticking
+        public void GameTick(object state = null)
         {
             TickCount++;
             var tickHandler = TickHandler;
@@ -162,9 +189,6 @@ namespace PuzzleConsole.Game
 
                 //Render the frame using the layers we've defined
                 view.RenderFrame(Layers);
-
-                //Cancel out any user text entered
-                Console.Write("\b \b");
             }
         }
 
