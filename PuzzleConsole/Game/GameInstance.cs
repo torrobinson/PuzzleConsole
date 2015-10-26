@@ -42,7 +42,7 @@ namespace PuzzleConsole.Game
                 if (!paused && Console.KeyAvailable)
                 {
                     //Pause and capture movements
-                    switch (Console.ReadKey(false).Key)
+                    switch (Console.ReadKey(true).Key)
                     {
                         case ConsoleKey.NumPad8:
                             Player.Move(Common.Direction.Up);
@@ -95,7 +95,7 @@ namespace PuzzleConsole.Game
                 if (paused && Console.KeyAvailable)
                 {
                     //Pause and capture movements
-                    switch (Console.ReadKey(false).Key)
+                    switch (Console.ReadKey(true).Key)
                     {
                         case ConsoleKey.Escape:
                             TogglePause();
