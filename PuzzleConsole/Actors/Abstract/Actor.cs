@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Runtime.Serialization;
+using PuzzleConsole.Actions;
+using PuzzleConsole.Actions.Actions;
 
 namespace PuzzleConsole.ActorTypes
 {
@@ -19,6 +21,14 @@ namespace PuzzleConsole.ActorTypes
         public Point Location;
         public Actor Represents; //if this actor is ever out of world but we still want it to represent a real actor in memory
         public Actor PushedActorLastMove;
+        public List<Command> CommandQueue;
+        public Command CurrentCommand;
+
+        //@ 20 ticks per second: 0.1 bpt = 2 bps, 0.05 bpt = 1 bps,  0.5 bpt = 10 bps
+        public abstract double MoveActionsPerTick
+        {
+            get;
+        }
 
         //Attributes
         public bool Static = true;
@@ -43,6 +53,23 @@ namespace PuzzleConsole.ActorTypes
         public ConsoleColor backColor = ConsoleColor.Black;
 
         public Actor() {
+            CommandQueue = new List<Command>();
+        }
+
+        public void AssignCommand(Command command) {
+            command.Actor = this;
+            CommandQueue.Add(command);
+        }
+
+        public void ClearCommands() {
+            CommandQueue = new List<Command>();
+        }
+
+        public Command GetNextCommand() {
+            Command command = CommandQueue.First();
+            CommandQueue.Remove(command);
+            CurrentCommand = command;
+            return command;
         }
 
         public void SubscribeToTicks() {
@@ -53,8 +80,29 @@ namespace PuzzleConsole.ActorTypes
             GameInstance.TickHandler -= (sender, args) => GameTick(args);
         }
 
-        public abstract void GameTick(EventArgs args);
+        public void GameTick(EventArgs args)
+        {
+            //If we're out of commands then attempt to fetch the next one
+            if (CurrentCommand == null)
+            {
+                if (CommandQueue.Any())
+                {
+                    //Pop the next command off the stack
+                    CurrentCommand = GetNextCommand();
+                }
+                else
+                {
+                    CurrentCommand = null;
+                }
+            }
 
+
+            //Try execute any work left in the command
+            if (CurrentCommand != null && CurrentCommand.HasActionToPerform())
+            {
+                CurrentCommand.ExecuteNextAction();
+            }
+        }
 
         //Get the location of this object, plus an offset
 		public Point GetLocationAtOffset(int offsetx, int offsety){
@@ -115,6 +163,10 @@ namespace PuzzleConsole.ActorTypes
 
         public bool IsPushable() {
             return this.GetType().IsSubclassOf(typeof(Pushable));
+        }
+
+        public bool IsMovable(){
+            return this.GetType().IsSubclassOf(typeof(Movable));
         }
     }
 

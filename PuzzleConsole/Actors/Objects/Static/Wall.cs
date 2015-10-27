@@ -27,9 +27,18 @@ namespace PuzzleConsole.ActorTypes
             base.foreColor = ConsoleColor.DarkGray;
         }
 
-        public override void GameTick(EventArgs args)
+        public double moveActionsPerTick = 0.05; //1 block per sec
+        public override double MoveActionsPerTick
         {
+            get
+            {
+                return moveActionsPerTick;
+            }
+        }
 
+        public void GameTick(EventArgs args)
+        {
+            base.GameTick(args);
         }
 
         public override string CharacterRepresentation

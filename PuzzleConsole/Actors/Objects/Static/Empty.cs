@@ -15,9 +15,13 @@ namespace PuzzleConsole.ActorTypes
             base.Clippable = true;
         }
 
-        public override void GameTick(EventArgs args)
+        public double moveActionsPerTick = 0.00;
+        public override double MoveActionsPerTick
         {
-
+            get
+            {
+                return moveActionsPerTick;
+            }
         }
     }
 }

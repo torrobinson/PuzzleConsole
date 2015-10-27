@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actors\Abstract\RandomMover.cs" />
+    <Compile Include="Actions\Action.cs" />
+    <Compile Include="Actions\Actions\MoveAction.cs" />
+    <Compile Include="Actions\Command.cs" />
+    <Compile Include="Actors\Abstract\Enemy.cs" />
     <Compile Include="Actors\DefaultCharacterRepresentation.cs" />
     <Compile Include="Actors\Objects\Movable\MoveTest.cs" />
     <Compile Include="Actors\Objects\Static\Custom.cs" />

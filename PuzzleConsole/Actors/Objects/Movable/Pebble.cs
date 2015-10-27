@@ -10,14 +10,17 @@ namespace PuzzleConsole.ActorTypes
     [DefaultCharacterRepresentation(".")]
     public class Pebble : Pushable
     {
+        public double moveActionsPerTick = 0.05; //1 block per sec
+        public override double MoveActionsPerTick
+        {
+            get
+            {
+                return moveActionsPerTick;
+            }
+        }
         public Pebble()
         {
             base.foreColor = ConsoleColor.Yellow;
-        }
-
-        public override void GameTick(EventArgs args)
-        {
-
         }
     }
 }

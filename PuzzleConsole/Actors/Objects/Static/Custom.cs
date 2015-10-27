@@ -18,6 +18,15 @@ namespace PuzzleConsole.ActorTypes
 
         private string customCharacter;
 
+        public double moveActionsPerTick = 0.05; //1 block per sec
+        public override double MoveActionsPerTick
+        {
+            get
+            {
+                return moveActionsPerTick;
+            }
+        }
+
         public override string CharacterRepresentation
         {
             get
@@ -30,9 +39,9 @@ namespace PuzzleConsole.ActorTypes
             }
         }
 
-        public override void GameTick(EventArgs args)
+        public void GameTick(EventArgs args)
         {
-
+            base.GameTick(args);
         }
     }
 }

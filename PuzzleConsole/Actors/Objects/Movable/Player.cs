@@ -15,9 +15,14 @@ namespace PuzzleConsole.ActorTypes
             base.backColor = ConsoleColor.Yellow;
         }
 
-        public override void GameTick(EventArgs args)
+        //TODO: implement player speed into ticks
+        public double moveActionsPerTick = 0.05;
+        public override double MoveActionsPerTick
         {
-
+            get
+            {
+                return moveActionsPerTick;
+            }
         }
     }
 }

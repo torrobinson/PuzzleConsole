@@ -10,14 +10,17 @@ namespace PuzzleConsole.ActorTypes
     [DefaultCharacterRepresentation("@")]
     public class Stone : Pushable
     {
+        public double moveActionsPerTick = 0.05; //1 block per sec
+        public override double MoveActionsPerTick
+        {
+            get
+            {
+                return moveActionsPerTick;
+            }
+        }
         public Stone()
         {
             base.foreColor = ConsoleColor.Magenta;
-        }
-
-        public override void GameTick(EventArgs args)
-        {
-            
         }
     }
 }
