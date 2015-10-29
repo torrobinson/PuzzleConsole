@@ -10,7 +10,7 @@ using PuzzleConsole.Actions.Actions;
 
 namespace PuzzleConsole.ActorTypes
 {
-    public abstract class Enemy : Pushable
+    public abstract class Follower : Pushable
     {
 
         public double moveActionsPerTick = 0.1; //1 block per sec
@@ -21,13 +21,9 @@ namespace PuzzleConsole.ActorTypes
             }
         }
 
-        public Enemy()
+        public Follower()
         {
-
-
-            //Subscribe to the game clock
             base.SubscribeToTicks();
-
         }
     }
 }

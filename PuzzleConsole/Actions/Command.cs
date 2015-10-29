@@ -35,7 +35,7 @@ namespace PuzzleConsole.Actions
                 return actionQueue.First().Speed;
             }
             else{
-                return 0.00001;
+                return 1;
             }
         }
 

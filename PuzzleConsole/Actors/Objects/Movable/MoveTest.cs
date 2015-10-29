@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PuzzleConsole.ActorTypes
 {
     [DefaultCharacterRepresentation("M")]
-    public class MoveTest : Enemy {
+    public class MoveTest : Follower {
         public MoveTest()
         {
             base.foreColor = ConsoleColor.Red;

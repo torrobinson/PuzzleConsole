@@ -47,7 +47,7 @@
     <Compile Include="Actions\Actions\MoveAction.cs" />
     <Compile Include="Actions\Command.cs" />
     <Compile Include="Actions\CommandHelpers.cs" />
-    <Compile Include="Actors\Abstract\Enemy.cs" />
+    <Compile Include="Actors\Abstract\Follower.cs" />
     <Compile Include="Actors\DefaultCharacterRepresentation.cs" />
     <Compile Include="Actors\Objects\Movable\MoveTest.cs" />
     <Compile Include="Actors\Objects\Static\Custom.cs" />

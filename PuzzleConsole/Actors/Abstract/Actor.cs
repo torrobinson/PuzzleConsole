@@ -21,9 +21,12 @@ namespace PuzzleConsole.ActorTypes
         public Point Location;
         public Actor Represents; //if this actor is ever out of world but we still want it to represent a real actor in memory
         public Actor PushedActorLastMove;
+
+        //Action
         public List<Command> CommandQueue;
         public Command CurrentCommand;
         public int TicksTilAction;
+
 
         //@ 20 ticks per second: 0.1 bpt = 2 bps, 0.05 bpt = 1 bps,  0.5 bpt = 10 bps
         public abstract double MoveActionsPerTick
@@ -58,32 +61,40 @@ namespace PuzzleConsole.ActorTypes
         }
 
         public void AssignCommand(Command command) {
-            command.Actor = this;
-            CommandQueue.Add(command);
+            if (command != null) {
+                command.Actor = this;
+                CommandQueue.Add(command);
+            }
         }
 
-        public void ClearCommands() {
+        public void ClearCommandQueue(){
             CommandQueue = new List<Command>();
         }
 
         public Command GetNextCommand() {
-            Command command = CommandQueue.First();
-            CommandQueue.Remove(command);
-            CurrentCommand = command;
-            return command;
+            if (CommandQueue.Any())
+            {
+                Command command = CommandQueue.First();
+                CommandQueue.Remove(command);
+                CurrentCommand = command;
+                return command;
+            }
+            else {
+                return null;
+            }
         }
 
         public void SubscribeToTicks() {
             GameInstance.TickHandler += (sender, args) => GameTick(args);
         }
 
-        public void UnsubscribeFromTicks() {
+        public void UnsubscribeFromTicks(){
             GameInstance.TickHandler -= (sender, args) => GameTick(args);
         }
 
         public void GameTick(EventArgs args)
         {
-            //If we're out of commands then attempt to fetch the next one
+            //Ensure we have a command we're currently running
             if (CurrentCommand == null)
             {
                 if (CommandQueue.Any())
@@ -98,19 +109,24 @@ namespace PuzzleConsole.ActorTypes
             }
 
 
-            //Try execute any work left in the command
+            //Then try to execute any actions left in the command
             if (CurrentCommand != null && CurrentCommand.HasActionToPerform())
             {
                 if (TicksTilAction == 0)
                 {
                     //Perform the action
                     CurrentCommand.ExecuteNextAction();
+
                     //Set the ticks left until the actual actually performs
                     RecalculateTicksUntilAction();
                 }
-                else {
+                else
+                {
                     TicksTilAction--;
                 }
+            }
+            else {
+                CurrentCommand = GetNextCommand();
             }
         }
 
@@ -127,6 +143,11 @@ namespace PuzzleConsole.ActorTypes
 		public Point GetLocationAtOffset(int offsetx, int offsety){
             return Location.Add(new Point(offsetx, offsety));
 		}
+        public Point GetLocationInDirection(Common.Direction direction)
+        {
+            Point offset = Common.DirectionToPointOffset(direction);
+            return GetLocationAtOffset(offset.X, offset.Y);
+        }
 
         //Get current location as a Point
 		public Point GetLocation(){

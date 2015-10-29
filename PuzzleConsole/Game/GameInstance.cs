@@ -28,6 +28,9 @@ namespace PuzzleConsole.Game
         public int TickCount;
 
         private bool paused = false;
+
+        //Testing
+        public Follower Follower;
         
         public GameInstance() {
         
@@ -90,6 +93,10 @@ namespace PuzzleConsole.Game
                             TogglePause();
                             break;
                     }
+
+                    Follower.ClearCommandQueue();
+                    Follower.AssignCommand(CommandHelpers.CreateMoveToCommand(Follower, Player.Location, true));
+
                 }
 
                 //Paused state input
@@ -132,9 +139,9 @@ namespace PuzzleConsole.Game
             Player = (Player)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Player));
 
             //Make the enemy go to a point, for testing
-            Enemy enemy = (Enemy)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Enemy));
-            Command moveToCommand = CommandHelpers.CreateMoveToCommand(enemy, new Point(58, 7));
-            enemy.AssignCommand(moveToCommand);
+            Follower = (Follower)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Follower));
+            Command moveToCommand = CommandHelpers.CreateMoveToCommand(Follower, Player.Location, true);
+            Follower.AssignCommand(moveToCommand);
 
             //Create a viewport sized for this map
             view = new Viewport(25, 30);
