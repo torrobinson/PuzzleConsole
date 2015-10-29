@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +46,7 @@
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\Actions\MoveAction.cs" />
     <Compile Include="Actions\Command.cs" />
+    <Compile Include="Actions\CommandHelpers.cs" />
     <Compile Include="Actors\Abstract\Enemy.cs" />
     <Compile Include="Actors\DefaultCharacterRepresentation.cs" />
     <Compile Include="Actors\Objects\Movable\MoveTest.cs" />
@@ -51,6 +54,11 @@
     <Compile Include="Actors\Objects\Static\Metal.cs" />
     <Compile Include="Actors\Objects\Static\OutOfBounds.cs" />
     <Compile Include="Actors\Objects\Static\Empty.cs" />
+    <Compile Include="Algorithms\IPathFinder.cs" />
+    <Compile Include="Algorithms\PathFinder.cs" />
+    <Compile Include="Algorithms\PathFinderFast.cs" />
+    <Compile Include="Algorithms\PathFinderHelpers.cs" />
+    <Compile Include="Algorithms\PriorityQueueB.cs" />
     <Compile Include="Game\GameInstance.cs" />
     <Compile Include="Game\Point.cs" />
     <Compile Include="Program.cs" />

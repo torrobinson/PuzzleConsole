@@ -22,6 +22,52 @@ namespace PuzzleConsole
             DownRight
 		};
 
+        public static Direction GetDirectionBetweenPoints(Point one, Point two) {
+            Point offset = two.Subtract(one);
+            if(offset.X == 0 && offset.Y == -1){
+                return Direction.Up;
+            }
+
+            else if (offset.X == 0 && offset.Y == 1)
+            {
+                return Direction.Down;
+            }
+
+            else if (offset.X == -1 && offset.Y == 0)
+            {
+                return Direction.Left;
+            }
+
+            else if (offset.X == 1 && offset.Y == 0)
+            {
+                return Direction.Right;
+            }
+
+            else if (offset.X == -1 && offset.Y == -1)
+            {
+                return Direction.UpLeft;
+            }
+
+            else if (offset.X == 1 && offset.Y == -1)
+            {
+                return Direction.UpRight;
+            }
+
+            else if (offset.X == -1 && offset.Y == 1)
+            {
+                return Direction.DownLeft;
+            }
+
+            else if (offset.X == 1 && offset.Y == 1)
+            {
+                return Direction.DownRight;
+            }
+
+            else {
+                return Direction.Up;
+            }
+        }
+
         public static List<Common.Direction> GetAllDirections(){
             return new List<Common.Direction>
             {

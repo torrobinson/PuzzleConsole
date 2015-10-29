@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Threading;
 
 using System.Timers;
+using PuzzleConsole.Actions;
 
 namespace PuzzleConsole.Game
 {
@@ -39,7 +40,7 @@ namespace PuzzleConsole.Game
             while (true)
             {
                 //Normal game input
-                if (!paused && Console.KeyAvailable)
+                if (!paused && Console.KeyAvailable && !Player.HasCommand())
                 {
                     //Pause and capture movements
                     switch (Console.ReadKey(true).Key)
@@ -129,6 +130,11 @@ namespace PuzzleConsole.Game
 
             Layers = new List<ActorLayer>() {pausedLayer, foreground, wallsAndItems, background };
             Player = (Player)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Player));
+
+            //Make the enemy go to a point, for testing
+            Enemy enemy = (Enemy)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Enemy));
+            Command moveToCommand = CommandHelpers.CreateMoveToCommand(enemy, new Point(58, 7));
+            enemy.AssignCommand(moveToCommand);
 
             //Create a viewport sized for this map
             view = new Viewport(25, 30);

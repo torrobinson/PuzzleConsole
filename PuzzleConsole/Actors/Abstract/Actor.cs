@@ -23,6 +23,7 @@ namespace PuzzleConsole.ActorTypes
         public Actor PushedActorLastMove;
         public List<Command> CommandQueue;
         public Command CurrentCommand;
+        public int TicksTilAction;
 
         //@ 20 ticks per second: 0.1 bpt = 2 bps, 0.05 bpt = 1 bps,  0.5 bpt = 10 bps
         public abstract double MoveActionsPerTick
@@ -100,8 +101,26 @@ namespace PuzzleConsole.ActorTypes
             //Try execute any work left in the command
             if (CurrentCommand != null && CurrentCommand.HasActionToPerform())
             {
-                CurrentCommand.ExecuteNextAction();
+                if (TicksTilAction == 0)
+                {
+                    //Perform the action
+                    CurrentCommand.ExecuteNextAction();
+                    //Set the ticks left until the actual actually performs
+                    RecalculateTicksUntilAction();
+                }
+                else {
+                    TicksTilAction--;
+                }
             }
+        }
+
+
+        public bool HasCommand() {
+            return CommandQueue != null && CommandQueue.Any();
+        }
+
+        private void RecalculateTicksUntilAction() {
+            TicksTilAction = Convert.ToInt32((1 / CurrentCommand.GetNextActionSpeed()));
         }
 
         //Get the location of this object, plus an offset

@@ -11,6 +11,13 @@ namespace PuzzleConsole.Actions.Actions
     {
         public Common.Direction Direction;
 
+        public override double Speed
+        {
+            get{
+                return Actor().MoveActionsPerTick;
+            }
+        }
+
         public MoveAction(Command command, Common.Direction direction) : base(command) {
             this.Direction = direction;
         }

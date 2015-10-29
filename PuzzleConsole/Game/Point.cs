@@ -22,5 +22,13 @@ namespace PuzzleConsole.Game
                     this.Y + anotherPoint.Y
                 );
         }
+
+        public Point Subtract(Point anotherPoint)
+        {
+            return new Point(
+                    this.X - anotherPoint.X,
+                    this.Y - anotherPoint.Y
+                );
+        }
     }
 }

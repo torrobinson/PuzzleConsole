@@ -30,24 +30,24 @@ namespace PuzzleConsole.Actions
             return actionQueue.Any();
         }
 
-        //Returns true if there was work to do still
-        public bool ExecuteNextAction() {
-            if (IsMovement() && IsTickTime(Actor.MoveActionsPerTick))
-            {
-                PuzzleConsole.Actions.Action nextAction = NextAction();
-                if (nextAction != null)
-                {
-                    nextAction.Execute();
-                    return true;
-                }
+        public double GetNextActionSpeed() {
+            if(actionQueue.Any()){
+                return actionQueue.First().Speed;
             }
-
-            return false;
+            else{
+                return 0.00001;
+            }
         }
 
-        private bool IsTickTime(double speed)
-        {
-            return Actor.Game.TickCount % (1 / speed) == 0;
+        //Returns true if there was work to do still
+        public bool ExecuteNextAction() {
+            PuzzleConsole.Actions.Action nextAction = NextAction();
+            if (nextAction != null)
+            {
+                nextAction.Execute();
+                return true;
+            }
+            return false;
         }
 
         // Action Queue manipulation
