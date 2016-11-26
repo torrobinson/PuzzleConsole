@@ -11,6 +11,10 @@ namespace PuzzleConsole.Actions
     {
         public Command Command;
 
+        public abstract double Speed {
+            get;
+        }
+
         public Action(Command command) {
             this.Command = command;
         }

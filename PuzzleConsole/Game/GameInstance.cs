@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Threading;
 
 using System.Timers;
+using PuzzleConsole.Actions;
 
 namespace PuzzleConsole.Game
 {
@@ -27,6 +28,9 @@ namespace PuzzleConsole.Game
         public int TickCount;
 
         private bool paused = false;
+
+        //Testing
+        public Follower Follower;
         
         public GameInstance() {
         
@@ -39,7 +43,7 @@ namespace PuzzleConsole.Game
             while (true)
             {
                 //Normal game input
-                if (!paused && Console.KeyAvailable)
+                if (!paused && Console.KeyAvailable && !Player.HasCommand())
                 {
                     //Pause and capture movements
                     switch (Console.ReadKey(true).Key)
@@ -89,6 +93,10 @@ namespace PuzzleConsole.Game
                             TogglePause();
                             break;
                     }
+
+                    Follower.ClearCommandQueue();
+                    Follower.AssignCommand(CommandHelpers.CreateMoveToCommand(Follower, Player.Location, true));
+
                 }
 
                 //Paused state input
@@ -129,6 +137,11 @@ namespace PuzzleConsole.Game
 
             Layers = new List<ActorLayer>() {pausedLayer, foreground, wallsAndItems, background };
             Player = (Player)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Player));
+
+            //Make the enemy go to a point, for testing
+            Follower = (Follower)wallsAndItems.FindFirstObjectInWorldOfType(typeof(Follower));
+            Command moveToCommand = CommandHelpers.CreateMoveToCommand(Follower, Player.Location, true);
+            Follower.AssignCommand(moveToCommand);
 
             //Create a viewport sized for this map
             view = new Viewport(25, 30);
